@@ -1,6 +1,6 @@
 const DOMPARSER = new DOMParser().parseFromString.bind(new DOMParser())
 /* Fetch URLs from JSON */
-fetch('http://cors-anywhere.com/https://www.hongkiat.com', { mode: 'no-cors'}).then((res) => {
+fetch('https://maze.fr', { mode: 'no-cors'}).then((res) => {
 	res.text().then((data) => {
 		var frag = document.createDocumentFragment()
 		var hasBegun = true
