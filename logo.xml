@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+
+<channel>
+  <title>W3Schools Home Page</title>
+  <link>https://cafezigomar.cf</link>
+  <description>Free web building tutorials</description>
+  <image>
+    <url>https://cafezigomar.cf/images/logo00.png</url>
+    <title>W3Schools.com</title>
+    <link>https://cafezigomar.cf</link>
+  </image>
+  <item>
+    <title>RSS Tutorial</title>
+    <link>https://zigomar007.github.io/rss-reader/2.xml</link>
+    <description>New RSS tutorial on W3Schools</description>
+  </item>
+</channel>
+
+</rss>
