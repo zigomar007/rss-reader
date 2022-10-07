@@ -62,14 +62,14 @@ arabi21 320
 <ul id="feed4"></ul>
 cafezigomar
 <ul id="feed5"></ul>
-<script>		
-google.load("feeds", "1");
+<script>
+google.load("feeds", "2");
 
     function initialize() {
       var feed = new google.feeds.Feed("https://zigomar007.github.io/rss-reader/logo.xml");
       feed.load(function(result) {
         if (!result.error) {
-          var container = document.getElementById("feed1");
+          var container = document.getElementById("feed2");
           for (var i = 0; i < result.feed.entries.length; i++) {
             var entry = result.feed.entries[i];
 			
@@ -90,14 +90,9 @@ google.load("feeds", "1");
 			var p = document.createElement('p');
             p.appendChild(document.createTextNode(entry.contentSnippet));
             container.appendChild(p);
-			 var li = document.createElement('img');
-            li.appendChild(document.createTextNode(entry.image));
-            container.appendChild(li);
-           
 			var a = document.createElement("span");
             a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
             container.appendChild(a);
-			
           }
         }
       });
