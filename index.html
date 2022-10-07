@@ -81,10 +81,10 @@ google.load("feeds", "2");
 			
             li.appendChild(document.createTextNode(entry.title));
             container.appendChild(li);
+			var li = document.createElement("h5");
+            li.appendChild(document.createTextNode(entry.publishedDate));
+            container.appendChild(li);
 			
-			var p = document.createElement("h5");
-            p.appendChild(document.createTextNode(entry.publishedDate));
-            container.appendChild(p);
 			
 			
 			var p = document.createElement('p');
