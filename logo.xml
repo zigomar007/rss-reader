@@ -4,20 +4,22 @@
 	xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
 	>
 	<channel>
-<atom:link href="https://zigomar007.github.io/rss-reader/logo.xml" rel="self" type="application/rss+xml"/>
-
-<title>W3Schools Home Page</title>
-<link>https://cafezigomar.cf</link>
-<description>Free web building tutorials</description>
-<lastBuildDate>Fri, 07 Oct 2022 19:52:44 +0000</lastBuildDate>
+		<atom:link href="https://www.aljazeera.net/aljazeerarss/a7c186be-1baa-4bd4-9d80-a84db769f779/73d0e1b4-532f-45ef-b135-bfdff8b8cab9" rel="self" type="application/rss+xml"/>
+		<title>الجزيرة نت</title>
+		<link>https://www.aljazeera.net</link>
+		<managingEditor>apps.support@aljazeera.net (Apps Support)</managingEditor>
+		<webMaster>apps.support@aljazeera.net (Apps Support)</webMaster>
+		<description>الجزيرة نت: آخر أخبار اليوم حول العالم</description>
+		<copyright>© 2022 Al Jazeera Media Network</copyright>
+		<lastBuildDate>Fri, 07 Oct 2022 19:52:44 +0000</lastBuildDate>
 		<language>ar</language>
-<image>
-<url>https://cafezigomar.cf/images/logo00.png</url>
-<title>W3Schools.com</title>
-<link>https://cafezigomar.cf</link>
-<description>الجزيرة نت: آخر أخبار اليوم حول العالم</description>
-</image>
-<generator>https://wordpress.org/?v=6.0.2</generator>
+		<image>
+			<url>https://www.aljazeera.net/images/logo_aja.png</url>
+			<title>الجزيرة نت</title>
+			<link>https://www.aljazeera.net</link>
+			<description>الجزيرة نت: آخر أخبار اليوم حول العالم</description>
+		</image>
+		<generator>https://wordpress.org/?v=6.0.2</generator>
 			<item>
 <link>https://www.aljazeera.net/programs/behindthenews/2022/10/7/%d9%85%d8%a7-%d9%88%d8%b1%d8%a7%d8%a1-%d8%a7%d9%84%d8%ae%d8%a8%d8%b1-%d9%84%d8%a8%d9%86%d8%a7%d9%86-%d8%a5%d8%b3%d8%b1%d8%a7%d8%a6%d9%8a%d9%84-%d8%aa%d8%b1%d8%b3%d9%8a%d9%85</link>
 <title>ترسيم الحدود البحرية مع لبنان.. لماذا تدعو إسرائيل جيشها للاستعداد لمواجهة محتملة؟</title>
