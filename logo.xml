@@ -1,21 +1,32 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
-
 <channel>
-  <title>W3Schools Home Page</title>
-  <link>https://cafezigomar.cf</link>
-  <description>Free web building tutorials</description>
-  <image>
-    <url>https://cafezigomar.cf/images/logo00.png</url>
-    <title>W3Schools.com</title>
-    <link>https://cafezigomar.cf</link>
-  </image>
-  <item>
-    <title>RSS Tutorial</title>
-   <pubDate>Ven 07 Oct 2022 18:44:17 +0300</pubDate>
-    <link>https://zigomar007.github.io/rss-reader/2.xml</link>
-    <description>New RSS tutorial on W3Schools</description>
-  </item>
-</channel>
+<title>W3Schools Home Page</title>
+<link>https://cafezigomar.cf</link>
+<description>Free web building tutorials</description>
+<image>
+<url>https://cafezigomar.cf/images/logo00.png</url>
+<title>W3Schools.com</title>
+<link>https://cafezigomar.cf</link>
+</image>
+<item>
+<link>https://zigomar007.github.io/rss-reader/2.xml</link>
+<title>RSS Tutorial</title>
+<description><![CDATA[New RSS tutorial on W3Schools]]></description>
+<pubDate>Ven, 07 Oct 2022 18:44:17 +0300</pubDate>
+<category>حوارية</category>
+<guid isPermaLink="false">https://www.aljazeera.net/?t=1665163743</guid>
 
+</item>
+
+<item>
+<link>https://www.aljazeera.net/programs/behindthenews/2022/10/7/%d9%85%d8%a7-%d9%88%d8%b1%d8%a7%d8%a1-%d8%a7%d9%84%d8%ae%d8%a8%d8%b1-%d9%84%d8%a8%d9%86%d8%a7%d9%86-%d8%a5%d8%b3%d8%b1%d8%a7%d8%a6%d9%8a%d9%84-%d8%aa%d8%b1%d8%b3%d9%8a%d9%85</link>
+<title>ترسيم الحدود البحرية مع لبنان.. لماذا تدعو إسرائيل جيشها للاستعداد لمواجهة محتملة؟</title>
+<description><![CDATA[أكّد الكاتب والمحلل السياسي اللبناني توفيق شومان أن لبنان ينتظر أن يأتي الرد من الإدارة الأميركية بشأن تهديد إسرائيل باحتمال حدوث تصعيد على الحدود مع لبنان، وشدد على تمسك الطرف اللبناني بموقفه.]]></description>
+<pubDate>Fri, 07 Oct 2022 19:31:07 +0300</pubDate>
+<category>حوارية</category>
+<guid isPermaLink="false">https://www.aljazeera.net/?t=1665163743</guid>
+</item>
+
+
+</channel>
 </rss>
