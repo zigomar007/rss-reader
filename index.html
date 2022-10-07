@@ -66,7 +66,7 @@ cafezigomar
 google.load("feeds", "1");
 
     function initialize() {
-      var feed = new google.feeds.Feed("2.xml");
+      var feed = new google.feeds.Feed("https://zigomar007.github.io/rss-reader/2.xml");
       feed.load(function(result) {
         if (!result.error) {
           var container = document.getElementById("feed1");
