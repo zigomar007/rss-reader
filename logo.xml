@@ -20,14 +20,6 @@
 			<description>الجزيرة نت: آخر أخبار اليوم حول العالم</description>
 		</image>
 		<generator>https://wordpress.org/?v=6.0.2</generator>
-			<item>
-<link>https://www.aljazeera.net/programs/behindthenews/2022/10/7/%d9%85%d8%a7-%d9%88%d8%b1%d8%a7%d8%a1-%d8%a7%d9%84%d8%ae%d8%a8%d8%b1-%d9%84%d8%a8%d9%86%d8%a7%d9%86-%d8%a5%d8%b3%d8%b1%d8%a7%d8%a6%d9%8a%d9%84-%d8%aa%d8%b1%d8%b3%d9%8a%d9%85</link>
-<title>ترسيم الحدود البحرية مع لبنان.. لماذا تدعو إسرائيل جيشها للاستعداد لمواجهة محتملة؟</title>
-<pubDate>Fri, 07 Oct 2022 19:31:07 +0300</pubDate>	
-<description><![CDATA[أكّد الكاتب والمحلل السياسي اللبناني توفيق شومان أن لبنان ينتظر أن يأتي الرد من الإدارة الأميركية بشأن تهديد إسرائيل باحتمال حدوث تصعيد على الحدود مع لبنان، وشدد على تمسك الطرف اللبناني بموقفه.]]></description>
-<category>حوارية</category>
-<guid isPermaLink="false">https://www.aljazeera.net/?t=1665163743</guid>
-</item>
 
 <item>
 <link>https://zigomar007.github.io/rss-reader/2.xml</link>
@@ -37,6 +29,15 @@
 <category>حوارية</category>
 <guid isPermaLink="false">https://www.aljazeera.net/?t=1665163743</guid>
 
+</item>			
+<item>
+<link>https://www.aljazeera.net/programs/behindthenews/2022/10/7/%d9%85%d8%a7-%d9%88%d8%b1%d8%a7%d8%a1-%d8%a7%d9%84%d8%ae%d8%a8%d8%b1-%d9%84%d8%a8%d9%86%d8%a7%d9%86-%d8%a5%d8%b3%d8%b1%d8%a7%d8%a6%d9%8a%d9%84-%d8%aa%d8%b1%d8%b3%d9%8a%d9%85</link>
+<title>ترسيم الحدود البحرية مع لبنان.. لماذا تدعو إسرائيل جيشها للاستعداد لمواجهة محتملة؟</title>
+<pubDate>Fri, 07 Oct 2022 19:31:07 +0300</pubDate>	
+<description><![CDATA[أكّد الكاتب والمحلل السياسي اللبناني توفيق شومان أن لبنان ينتظر أن يأتي الرد من الإدارة الأميركية بشأن تهديد إسرائيل باحتمال حدوث تصعيد على الحدود مع لبنان، وشدد على تمسك الطرف اللبناني بموقفه.]]></description>
+<category>حوارية</category>
+<guid isPermaLink="false">https://www.aljazeera.net/?t=1665163743</guid>
 </item>
+
 </channel>
 </rss>
