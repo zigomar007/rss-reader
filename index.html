@@ -66,7 +66,7 @@ cafezigomar
 google.load("feeds", "1");
 
     function initialize() {
-      var feed = new google.feeds.Feed("http://feeds.bbci.co.uk/news/world/rss.xml");
+      var feed = new google.feeds.Feed("2.xml");
       feed.load(function(result) {
         if (!result.error) {
           var container = document.getElementById("feed1");
