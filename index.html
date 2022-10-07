@@ -62,43 +62,7 @@ arabi21 320
 <ul id="feed4"></ul>
 cafezigomar
 <ul id="feed5"></ul>
-<script>
-google.load("feeds", "2");
 
-    function initialize() {
-      var feed = new google.feeds.Feed("https://zigomar007.github.io/rss-reader/logo.xml");
-      feed.load(function(result) {
-        if (!result.error) {
-          var container = document.getElementById("feed1");
-          for (var i = 0; i < result.feed.entries.length; i++) {
-            var entry = result.feed.entries[i];
-			
-            var li = document.createElement("h3");
-            li.appendChild(document.createTextNode(entry.categories));
-            container.appendChild(li);
-			
-			var li = document.createElement("h2");
-			
-            li.appendChild(document.createTextNode(entry.title));
-            container.appendChild(li);
-			var li = document.createElement("h5");
-            li.appendChild(document.createTextNode(entry.publishedDate));
-            container.appendChild(li);
-			
-			
-			
-			var p = document.createElement('p');
-            p.appendChild(document.createTextNode(entry.contentSnippet));
-            container.appendChild(p);
-			var a = document.createElement("span");
-            a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
-            container.appendChild(a);
-          }
-        }
-      });
-    }
-    google.setOnLoadCallback(initialize);
-</script>
 
 <script>
 google.load("feeds", "2");
@@ -213,6 +177,43 @@ google.load("feeds", "4");
             container.appendChild(a);
 		
           }document.querySelector("h3").style.color = "Blue";
+        }
+      });
+    }
+    google.setOnLoadCallback(initialize);
+</script>
+<script>
+google.load("feeds", "2");
+
+    function initialize() {
+      var feed = new google.feeds.Feed("https://zigomar007.github.io/rss-reader/logo.xml");
+      feed.load(function(result) {
+        if (!result.error) {
+          var container = document.getElementById("feed1");
+          for (var i = 0; i < result.feed.entries.length; i++) {
+            var entry = result.feed.entries[i];
+			
+            var li = document.createElement("h3");
+            li.appendChild(document.createTextNode(entry.categories));
+            container.appendChild(li);
+			
+			var li = document.createElement("h2");
+			
+            li.appendChild(document.createTextNode(entry.title));
+            container.appendChild(li);
+			var li = document.createElement("h5");
+            li.appendChild(document.createTextNode(entry.publishedDate));
+            container.appendChild(li);
+			
+			
+			
+			var p = document.createElement('p');
+            p.appendChild(document.createTextNode(entry.contentSnippet));
+            container.appendChild(p);
+			var a = document.createElement("span");
+            a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
+            container.appendChild(a);
+          }
         }
       });
     }
