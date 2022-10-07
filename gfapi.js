@@ -18,6 +18,7 @@ window.google.feeds.Feed = function(rssUrl,options){
             googleFormat.feed.feedUrl = data.feed.url;
 			googleFormat.feed.title = data.feed.title;
             googleFormat.feed.link = data.feed.link;
+			googleFormat.feed.pubDate = data.feed.pubDate;
             googleFormat.feed.description = data.feed.description;
             googleFormat.feed.author = data.feed.author;
 			googleFormat.feed.image = data.feed.image;
