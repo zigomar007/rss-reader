@@ -1,16 +1,24 @@
-<rss version="2.0">
-<channel>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/"
+	
+	xmlns:georss="http://www.georss.org/georss"
+	xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+	>
+	<channel>
+<atom:link href="https://zigomar007.github.io/rss-reader/logo.xml" rel="self" type="application/rss+xml"/>
+
 <title>W3Schools Home Page</title>
 <link>https://cafezigomar.cf</link>
 <description>Free web building tutorials</description>
+<lastBuildDate>Fri, 07 Oct 2022 19:52:44 +0000</lastBuildDate>
+		<language>ar</language>
 <image>
 <url>https://cafezigomar.cf/images/logo00.png</url>
 <title>W3Schools.com</title>
 <link>https://cafezigomar.cf</link>
+<description>الجزيرة نت: آخر أخبار اليوم حول العالم</description>
 </image>
-
-
-<item>
+<generator>https://wordpress.org/?v=6.0.2</generator>
+			<item>
 <link>https://www.aljazeera.net/programs/behindthenews/2022/10/7/%d9%85%d8%a7-%d9%88%d8%b1%d8%a7%d8%a1-%d8%a7%d9%84%d8%ae%d8%a8%d8%b1-%d9%84%d8%a8%d9%86%d8%a7%d9%86-%d8%a5%d8%b3%d8%b1%d8%a7%d8%a6%d9%8a%d9%84-%d8%aa%d8%b1%d8%b3%d9%8a%d9%85</link>
 <title>ترسيم الحدود البحرية مع لبنان.. لماذا تدعو إسرائيل جيشها للاستعداد لمواجهة محتملة؟</title>
 <description><![CDATA[أكّد الكاتب والمحلل السياسي اللبناني توفيق شومان أن لبنان ينتظر أن يأتي الرد من الإدارة الأميركية بشأن تهديد إسرائيل باحتمال حدوث تصعيد على الحدود مع لبنان، وشدد على تمسك الطرف اللبناني بموقفه.]]></description>
