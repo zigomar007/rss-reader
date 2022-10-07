@@ -209,7 +209,7 @@ google.load("feeds", "2");
 			
 			
 			var li = document.createElement('h4');
-            li.appendChild(document.createTextNode(entry.content));
+            li.appendChild(document.createTextNode(entry.description));
             container.appendChild(li);
 			var a = document.createElement("span");
             a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
