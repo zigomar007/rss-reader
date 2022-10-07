@@ -69,7 +69,7 @@ google.load("feeds", "2");
       var feed = new google.feeds.Feed("https://zigomar007.github.io/rss-reader/logo.xml");
       feed.load(function(result) {
         if (!result.error) {
-          var container = document.getElementById("feed2");
+          var container = document.getElementById("feed1");
           for (var i = 0; i < result.feed.entries.length; i++) {
             var entry = result.feed.entries[i];
 			
