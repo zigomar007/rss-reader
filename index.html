@@ -60,7 +60,7 @@ arabi21 316
 arabi21 320
 <ul id="feed4"></ul>
 bbci world
-<div id="feed1"></div>
+<li id="feed1"></li>
 cafezigomar
 <ul id="feed5"></ul>
 
@@ -212,7 +212,7 @@ google.load("feeds", "2");
             li.appendChild(document.createTextNode(entry.publishedDate));
             container.appendChild(li);
            var p = document.createElement("p");
-            p.innerHTML = '<p' + entry.content  ;
+            p.innerHTML = '<p' + entry.description  ;
             container.appendChild(p);
 			var a = document.createElement("span");
             a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
