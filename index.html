@@ -237,18 +237,20 @@ google.load("feeds", "5");
           for (var i = 0; i < result.feed.entries.length; i++) {
             var entry = result.feed.entries[i];
 			
-		 var li = document.createElement("h3");
+	 var li = document.createElement("h3");
             li.appendChild(document.createTextNode(entry.categories));
             container.appendChild(li);
+			
 			var li = document.createElement("h2");
             li.appendChild(document.createTextNode(entry.title));
             container.appendChild(li);
+			
 			var li = document.createElement("h5");
             li.appendChild(document.createTextNode(entry.publishedDate));
             container.appendChild(li);
-			 var li = document.createElement('p');
-            li.appendChild(document.createTextNode(entry.description));
-		p.innerHTML = '<p' + entry.description  ;  
+			
+			var li = document.createElement('p');
+            li.appendChild(document.createTextNode(entry.description)); 
             container.appendChild(li);
 		
 		 	
