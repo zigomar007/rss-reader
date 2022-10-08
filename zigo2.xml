@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0"?>
 <rss xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:georss="http://www.georss.org/georss" xmlns:media="http://search.yahoo.com/mrss/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
 <channel>
-<atom:link type="application/rss+xml" rel="self" href="https://www.cafezigomar.cf"/>
+<atom:link type="application/rss+xml" rel="self" href="https://zigomar007.github.io/rss-reader"/>
 <title>قهوة زيقومار</title>
-<a href="https://www.cafezigomar.cf" target="_blank">قهوة زيقومار</a>
+<a href="https://zigomar007.github.io/rss-reader/" target="_blank">قهوة زيقومار</a>
 <managingEditor>apps.support@aljazeera.net (Apps Support)</managingEditor>
-<webMaster>apps.support@cafezigomar.cf (Apps Support)</webMaster>
+<webMaster>apps.support@https://zigomar007.github.io/rss-reader (Apps Support)</webMaster>
 <description>قهوة زيقومار: آخر الأخبار</description>
 <copyright>© 2022 قهوة زيقومار</copyright>
 <lastBuildDate>jeudi, 28 Oct 2022 20:54:49 +0000</lastBuildDate>
@@ -19,10 +19,10 @@
 <author>بقلم : زيقومار</author>
 <generator>https://wordpress.org/?v=6.0.2</generator>
 	<item>
-<link>https://www.aljazeera.net/videos/2022/9/29/%d8%a7%d9%84%d9%83%d9%88%d9%8a%d8%aa-%d8%a7%d9%86%d8%aa%d8%ae%d8%a7%d8%a8%d8%a7%d8%aa-%d9%85%d8%ac%d9%84%d8%b3-%d8%a7%d9%84%d8%a3%d9%85%d8%a9</link>
-< g : additional_image_link >http://avatars.githubusercontent.com/u/103475660?v=4 </ g : additional_image_link >
+<link>https://zigomar007.github.io/rss-reader</link>
+
  <title>مسلسل جديد بنكهة رمضان زمان..الاصلية !</title>
-<description><p>توفي الجمعة، الشاعر العراقي الكبير مظفر النواب، في مقر إقامته بالإمارات، بعد صراع طويل مع المرض.<br /> </p> <p>&nbsp;</p> <p>ورحل النواب بعد أن كان قد وصف مرضه بأربع كلمات "مُتعبٌ منّي، ولا أقوى على حملي".<br /> <br /> </p> <p>وفيما يلي أبرز محطات حياة الشاعر الكبير مظفر النواب:</p> <p>&nbsp;</p> <p style="text-align: center;">&nbsp;</p> <p style="text-align: center;"><img alt="" src="1.jpg" style="width: 550px;" />&nbsp;</p>
+<description><p>توفي الجمعة، الشاعر العراقي الكبير مظفر النواب، في مقر إقامته بالإمارات، بعد صراع طويل مع المرض.<br /> </p><p style="text-align: center;"><img alt="" src="1.jpg" style="width: 550px;" />&nbsp;</p>
 <p><img alt="la Deux" src="1.jpg" style="width: 600px;" />
  <img alt="" src="1.jpg"/>
  </p> <img src="1.jpg" alt="le café"/>
@@ -31,7 +31,7 @@
 </description>
 <pubDate>thu, 28 Oct 2022 23:09:42 +0300</pubDate>
 <category>صحة شريبتكم !</category>
-<guid isPermaLink="false">https://www.cafezigomar.cf/?t=12345</guid>
+<guid isPermaLink="false">https://zigomar007.github.io/rss-reader</guid>
 
 </item>
 </channel>
