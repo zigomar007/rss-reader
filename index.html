@@ -48,7 +48,10 @@ direction: rtl;
 background-color: fuchsia;
 direction: rtl;
 }
-
+#feed6 {
+background-color: lightBlue;
+direction: rtl;
+}
 	</style>
 </head>	
 <body>
@@ -63,7 +66,8 @@ bbci world
 <p id="feed1"></p>
 cafezigomar
 <ul id="feed5"></ul>
-
+cafezigomar feed
+<ul id="feed6"></ul>
 
 <script>
 google.load("feeds", "2");
@@ -265,7 +269,48 @@ google.load("feeds", "5");
     }
     google.setOnLoadCallback(initialize);
 </script>
+<script>
+google.load("feeds", "5");
 
+    function initialize() {
+      var feed = new google.feeds.Feed("https://raw.githubusercontent.com/zigomar007/cafezigomar.ml/main/feed");
+       feed.load(function(result) {
+        if (!result.error) {
+          var container = document.getElementById("feed6");
+          for (var i = 0; i < result.feed.entries.length; i++) {
+            var entry = result.feed.entries[i];
+			
+		 var li = document.createElement("h3");
+            li.appendChild(document.createTextNode(entry.categories));
+            container.appendChild(li);
+			var li = document.createElement("h2");
+            li.appendChild(document.createTextNode(entry.title));
+            container.appendChild(li);
+	var li = document.createElement('p');
+            li.appendChild(document.createTextNode(entry.additional_image_link));
+            container.appendChild(li);
+	var li = document.createElement('p');
+            li.appendChild(document.createTextNode(entry.image));
+            container.appendChild(li);	  
+			var li = document.createElement("h5");
+            li.appendChild(document.createTextNode(entry.publishedDate));
+            container.appendChild(li);
+			 var p = document.createElement("p");
+            p.innerHTML = '<p' + entry.content  ;
+            container.appendChild(p);
+		  
+		
+			
+		var a = document.createElement("span");
+            a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
+            container.appendChild(a);
+		
+          }document.querySelector("h3").style.color = "Blue";
+        }
+      });
+    }
+    google.setOnLoadCallback(initialize);
+</script>
  
 
 </body>
