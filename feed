@@ -1,38 +1,21 @@
-﻿<?xml version="1.0"?>
-<rss xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:georss="http://www.georss.org/georss" xmlns:media="http://search.yahoo.com/mrss/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/" version="2.0"> 
 <channel>
-<atom:link type="application/rss+xml" rel="self" href="https://zigomar007.github.io/rss-reader"/>
-<title>قهوة زيقومار</title>
-<a href="https://zigomar007.github.io/rss-reader/" target="_blank">قهوة زيقومار</a>
-<managingEditor>apps.support@aljazeera.net (Apps Support)</managingEditor>
-<webMaster>apps.support@https://zigomar007.github.io/rss-reader (Apps Support)</webMaster>
-<description>قهوة زيقومار: آخر الأخبار</description>
-<copyright>© 2022 قهوة زيقومار</copyright>
-<lastBuildDate>jeudi, 28 Oct 2022 20:54:49 +0000</lastBuildDate>
-<language>ar</language>
-<image>
-<url>1.jpg</url>
-<title>الجزيرة نت</title>
-<link>https://www.cafezigomar.cf</link>
-<description>قهوة زيقومار: آخر أخبار اليوم</description>
-</image>
-<author>بقلم : زيقومار</author>
-<generator>https://wordpress.org/?v=6.0.2</generator>
-	<item>
-<link>https://zigomar007.github.io/rss-reader</link>
+<title>ThatAwesomeShirt! Latest Shirts</title>
+<link>http://www.thatawesomeshirt.com/</link>
 
- <title>مسلسل جديد بنكهة رمضان زمان..الاصلية !</title>
-<description><p>توفي الجمعة، الشاعر العراقي الكبير مظفر النواب، في مقر إقامته بالإمارات، بعد صراع طويل مع المرض.<br /> </p><p style="text-align: center;"><img alt="" src="1.jpg" style="width: 550px;" /></p>
-<p><img alt="la Deux" src="1.jpg" style="width: 600px;" />
- <img alt="" src=/images/coffee2.jpg"/>
- </p> <img src="https://cafezigomar.cf/images/coffee2.jpg" alt="le café"/>
-كورسة متاع 11 سنة عرفت شلة متجددة متاع شخصيات تحتفل بقهوتها الاسبوعية مع السرفور حوسين. تقدم مجموعة شخصيات تتمنى تخرج معاها كل أسبوع، مكان تنجم تستعملو ديما وكل يوم من غير ما يولي ممل (متروك)، وسلسلة متاع مشاكل الي الناس يحبو يلمسوها باش يشوفوها تتحل.
+<item>
+<title>AWESOMENESS</title>
+<link>http://www.thatawesomeshirt.com/shirt/209/awesomeness</link>
 
-</description>
-<pubDate>thu, 28 Oct 2022 23:09:42 +0300</pubDate>
-<category>صحة شريبتكم !</category>
-<guid isPermaLink="false">https://zigomar007.github.io/rss-reader</guid>
-
+<media:thumbnail url='http://www.thatawesomeshirt.com/images/get/252/shirt_thumbnail' height='75' width='75' />
 </item>
+<item>
+<title>Quit Work, Be A Ninja</title>
+<link>http://www.thatawesomeshirt.com/shirt/208/quit_work_be_a_ninja</link>   
+
+<strong><media:thumbnail url='https://cafezigomar.cf/images/coffee2.jpg' height='75' width='75' /></strong>
+</item>
+
 </channel>
 </rss>
