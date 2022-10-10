@@ -16,12 +16,6 @@ https://arabi21.com/Rss/SectionNewsRSS?id=305
 body {}
 img {width: 600px;}
 hr {background-color: #B0BEC5;height: 4px;}
-#feed {direction: ltr;}
-#feed2 {direction: rtl;}
-img {
-  max-width: 100%;
-  box-shadow: 0 0 3px #B0BEC5;
-}
 h2 {color: brown;}
 h3 {color: white;}
 a {
@@ -34,15 +28,17 @@ font-size: 1.2em;
 }
 #feed1 {
 background-color: cyan;
+direction: rtl;
 }
 #feed2 {
 background-color: orange;
+direction: rtl;
 }
 #feed3 {
 background-color: yellow;
 direction: rtl;
 }#feed4 {
-background-color: orange;
+background-color: magenta;
 direction: rtl;
 }#feed5 {
 background-color: fuchsia;
@@ -59,15 +55,14 @@ direction: rtl;
 	</style>
 </head>	
 <body>
-
+arabi21 408
+<p id="feed1"></p>
 aljazeera net
 <div id="feed2"></div>
 arabi21 316
 <div id="feed3"></div>
 arabi21 320
 <ul id="feed4"></ul>
-bbci world
-<p id="feed1"></p>
 rss-reader feed
 <ul id="feed5"></ul>
 cafezigomarcf feed
@@ -75,7 +70,49 @@ cafezigomarcf feed
 cafezigomarml feed
 <ul id="feed7"></ul>
 <script>
-google.load("feeds", "2");
+google.load("feeds", "20");
+
+    function initialize() {
+      var feed = new google.feeds.Feed("https://arabi21.com/Rss/SectionNewsRSS?id=408");
+       feed.load(function(result) {
+        if (!result.error) {
+          var container = document.getElementById("feed1");
+          for (var i = 0; i < result.feed.entries.length; i++) {
+            var entry = result.feed.entries[i];
+			
+		 var li = document.createElement("h3");
+            li.appendChild(document.createTextNode(entry.categories));
+            container.appendChild(li);
+			var li = document.createElement("h2");
+            li.appendChild(document.createTextNode(entry.title));
+            container.appendChild(li);
+	var li = document.createElement('p');
+            li.appendChild(document.createTextNode(entry.additional_image_link));
+            container.appendChild(li);
+	var li = document.createElement('p');
+            li.appendChild(document.createTextNode(entry.image));
+            container.appendChild(li);	  
+			var li = document.createElement("h5");
+            li.appendChild(document.createTextNode(entry.publishedDate));
+            container.appendChild(li);
+			 var p = document.createElement("p");
+            p.innerHTML = '<p' + entry.content  ;
+            container.appendChild(p);
+		  
+		
+			
+		var a = document.createElement("span");
+            a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
+            container.appendChild(a);
+		
+          }document.querySelector("h3").style.color = "Blue";
+        }
+      });
+    }
+    google.setOnLoadCallback(initialize);
+</script>
+<script>
+google.load("feeds", "22");
 
     function initialize() {
       var feed = new google.feeds.Feed("https://www.aljazeera.net/aljazeerarss/a7c186be-1baa-4bd4-9d80-a84db769f779/73d0e1b4-532f-45ef-b135-bfdff8b8cab9");
@@ -112,7 +149,7 @@ google.load("feeds", "2");
     google.setOnLoadCallback(initialize);
 </script>
 <script>
-google.load("feeds", "3");
+google.load("feeds", "33");
 
     function initialize() {
       var feed = new google.feeds.Feed("https://arabi21.com/Rss/SectionNewsRSS?id=316&_ga=2.170017056.120769014.1616896951-217957536.1616896951");
@@ -157,7 +194,7 @@ google.load("feeds", "3");
 </script>
 
 <script>
-google.load("feeds", "4");
+google.load("feeds", "24");
 
     function initialize() {
       var feed = new google.feeds.Feed("https://arabi21.com/Rss/SectionNewsRSS?id=320");
@@ -192,51 +229,10 @@ google.load("feeds", "4");
     }
     google.setOnLoadCallback(initialize);
 </script>
-<script>
-google.load("feeds", "5");
 
-    function initialize() {
-      var feed = new google.feeds.Feed("https://arabi21.com/Rss/SectionNewsRSS?id=408");
-       feed.load(function(result) {
-        if (!result.error) {
-          var container = document.getElementById("feed1");
-          for (var i = 0; i < result.feed.entries.length; i++) {
-            var entry = result.feed.entries[i];
-			
-		 var li = document.createElement("h3");
-            li.appendChild(document.createTextNode(entry.categories));
-            container.appendChild(li);
-			var li = document.createElement("h2");
-            li.appendChild(document.createTextNode(entry.title));
-            container.appendChild(li);
-	var li = document.createElement('p');
-            li.appendChild(document.createTextNode(entry.additional_image_link));
-            container.appendChild(li);
-	var li = document.createElement('p');
-            li.appendChild(document.createTextNode(entry.image));
-            container.appendChild(li);	  
-			var li = document.createElement("h5");
-            li.appendChild(document.createTextNode(entry.publishedDate));
-            container.appendChild(li);
-			 var p = document.createElement("p");
-            p.innerHTML = '<p' + entry.content  ;
-            container.appendChild(p);
-		  
-		
-			
-		var a = document.createElement("span");
-            a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
-            container.appendChild(a);
-		
-          }document.querySelector("h3").style.color = "Blue";
-        }
-      });
-    }
-    google.setOnLoadCallback(initialize);
-</script>
 	
 <script>
-google.load("feeds", "5");
+google.load("feeds", "25");
 
     function initialize() {
       var feed = new google.feeds.Feed("https://zigomar007.github.io/rss-reader/feed.xml");
@@ -275,7 +271,7 @@ google.load("feeds", "5");
     google.setOnLoadCallback(initialize);
 </script>
 <script>
-google.load("feeds", "5");
+google.load("feeds", "26");
 
     function initialize() {
       var feed = new google.feeds.Feed("https://raw.githubusercontent.com/zigomar007/cafezigomar.cf/main/feed.xml");
@@ -313,7 +309,7 @@ google.load("feeds", "5");
     google.setOnLoadCallback(initialize);
 </script>
 <script>
-google.load("feeds", "7");
+google.load("feeds", "27");
 
     function initialize() {
       var feed = new google.feeds.Feed("https://raw.githubusercontent.com/zigomar007/cafezigomar.ml/main/feed.xml");
