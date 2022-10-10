@@ -1,62 +1,351 @@
-<?xml version="1.0"?>
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>feeeetch</title>
+<script src="jquery.min.js"></script>
+<script src="gfapi.js"></script>
+<script src="jsapi"></script>
+<!--
+https://arabi21.com/Rss/SectionNewsRSS?id=320
+https://arabi21.com/Rss/SectionNewsRSS?id=421
 
-<rss xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:georss="http://www.georss.org/georss" xmlns:media="http://search.yahoo.com/mrss/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
+https://arabi21.com/Rss/SectionNewsRSS?id=305
+-->
+<style>
+body {}
+img {width: 400px;}
+hr {background-color: #B0BEC5;height: 4px;}
+h2 {color: brown;}
+h3 {color: white;}
+a {
+display: inline-block;
+border: 2px solid lightBlue;
+}
+p{
+font-family: '';
+font-size: 1.2em;
+}
+#feed1 {
+background-color: cyan;
+direction: rtl;
+}
+#feed2 {
+background-color: orange;
+direction: rtl;
+}
+#feed3 {
+background-color: yellow;
+direction: rtl;
+}#feed4 {
+background-color: magenta;
+direction: rtl;
+}#feed5 {
+background-color: fuchsia;
+direction: rtl;
+}
+#feed6 {
+background-color: lightBlue;
+direction: rtl;
+}
+#feed7 {
+background-color: brown;
+direction: rtl;
+}
+	</style>
+</head>	
+<body>
+arabi21 408
+<p id="feed1"></p>
+aljazeera net
+<div id="feed2"></div>
+arabi21 316
+<div id="feed3"></div>
+arabi21 320
+<ul id="feed4"></ul>
+rss-reader feed
+<ul id="feed5"></ul>
+cafezigomarcf feed
+<ul id="feed6"></ul>
+cafezigomarml feed
+<ul id="feed7"></ul>
+<script>
+google.load("feeds", "20");
 
+    function initialize() {
+      var feed = new google.feeds.Feed("https://arabi21.com/Rss/SectionNewsRSS?id=408");
+       feed.load(function(result) {
+        if (!result.error) {
+          var container = document.getElementById("feed1");
+          for (var i = 0; i < result.feed.entries.length; i++) {
+            var entry = result.feed.entries[i];
+			
+		 var li = document.createElement("h3");
+            li.appendChild(document.createTextNode(entry.categories));
+            container.appendChild(li);
+			var li = document.createElement("h2");
+            li.appendChild(document.createTextNode(entry.title));
+            container.appendChild(li);
+	var li = document.createElement('p');
+            li.appendChild(document.createTextNode(entry.additional_image_link));
+            container.appendChild(li);
+	var li = document.createElement('p');
+            li.appendChild(document.createTextNode(entry.image));
+            container.appendChild(li);	  
+			var li = document.createElement("h5");
+            li.appendChild(document.createTextNode(entry.publishedDate));
+            container.appendChild(li);
+			 var p = document.createElement("p");
+            p.innerHTML = '<p' + entry.content  ;
+            container.appendChild(p);
+		  
+		
+			
+		var a = document.createElement("span");
+            a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
+            container.appendChild(a);
+		
+          }document.querySelector("h3").style.color = "Blue";
+        }
+      });
+    }
+    google.setOnLoadCallback(initialize);
+</script>
+<script>
+google.load("feeds", "22");
 
-<channel>
+    function initialize() {
+      var feed = new google.feeds.Feed("https://www.aljazeera.net/aljazeerarss/a7c186be-1baa-4bd4-9d80-a84db769f779/73d0e1b4-532f-45ef-b135-bfdff8b8cab9");
+      feed.load(function(result) {
+        if (!result.error) {
+          var container = document.getElementById("feed2");
+          for (var i = 0; i < result.feed.entries.length; i++) {
+            var entry = result.feed.entries[i];
+			
+            var li = document.createElement("h3");
+            li.appendChild(document.createTextNode(entry.categories));
+            container.appendChild(li);
+			
+			var li = document.createElement("h2");
+			
+            li.appendChild(document.createTextNode(entry.title));
+            container.appendChild(li);
+			
+			var p = document.createElement("h5");
+            p.appendChild(document.createTextNode(entry.publishedDate));
+            container.appendChild(p);
+			
+			
+			var p = document.createElement('p');
+            p.appendChild(document.createTextNode(entry.contentSnippet));
+            container.appendChild(p);
+			var a = document.createElement("span");
+            a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
+            container.appendChild(a);
+          }
+        }
+      });
+    }
+    google.setOnLoadCallback(initialize);
+</script>
+<script>
+google.load("feeds", "33");
 
-<atom:link type="application/rss+xml" rel="self" href="https://www.aljazeera.net/aljazeerarss/a7c186be-1baa-4bd4-9d80-a84db769f779/73d0e1b4-532f-45ef-b135-bfdff8b8cab9"/>
+    function initialize() {
+      var feed = new google.feeds.Feed("https://arabi21.com/Rss/SectionNewsRSS?id=316&_ga=2.170017056.120769014.1616896951-217957536.1616896951");
+       feed.load(function(result) {
+        if (!result.error) {
+          var container = document.getElementById("feed3");
+          for (var i = 0; i < result.feed.entries.length; i++) {
+            var entry = result.feed.entries[i];
+			
+            var li = document.createElement("h3");
+            li.appendChild(document.createTextNode(entry.categories));
+            container.appendChild(li);
+			 
+  
+		var div = document.createElement("h2");
+            div.appendChild(document.createTextNode(entry.title));
+            container.appendChild(div);
+	var img = document.createElement("img");
+            img.appendChild(document.createTextNode(entry.image));
+            container.appendChild(img);
+			var p = document.createElement("p");
+            p.appendChild(document.createTextNode(entry.author));
+            container.appendChild(p);
+			var li = document.createElement("h5");
+            li.appendChild(document.createTextNode(entry.publishedDate));
+            container.appendChild(li);
+           var p = document.createElement("p");
+            p.innerHTML = '<p' + entry.content  ;
+            container.appendChild(p);
+		
+            	
+			
+		var a = document.createElement("span");
+            a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
+            container.appendChild(a);
+		
+          }document.querySelector("h3").style.color = "Blue";
+        }
+      });
+    }
+    google.setOnLoadCallback(initialize);
+</script>
 
-<title>الجزيرة نت</title>
-<a href="https://cafezigomar.cf" target="_blank">قهوة زيقومار</a>
-<managingEditor>apps.support@aljazeera.net (Apps Support)</managingEditor>
-<webMaster>apps.support@https://zigomar007.github.io/rss-reader (Apps Support)</webMaster>
-<description>قهوة زيقومار: آخر الأخبار</description>
-<copyright>© 2022 قهوة زيقومار</copyright>
-<lastBuildDate>jeudi, 28 Oct 2022 20:54:49 +0000</lastBuildDate>
-<language>ar</language>
-<image>
-<url>https://cafezigomar.cf/images/coffee2.jpg</url>
-<title>café zigomar</title>
-<link>https://cafezigomar.cf</link>
-<description>قهوة زيقومار: آخر أخبار اليوم</description>
-</image>
-<author>بقلم : زيقومار</author>
-<generator>https://wordpress.org/?v=6.0.2</generator>
-	<item>
-<link>https://cafezigomar.cf</link>
+<script>
+google.load("feeds", "24");
 
- <title>مسلسل جديد بنكهة رمضان زمان..الاصلية !</title>
-<description><![CDATA[
-<p>
-<img alt="la Deux" src="https://cafezigomar.cf/images/coffee2.jpg" style="width: 200px;" />
- <img alt="" src="http://arabi21.com/UP/00000000000000000000000000000000000000000000000000000000/02.2017/%D8%A3%D8%B1%D8%AF%D9%88%D8%BA%D8%A7%D9%86%20%D8%B9%D9%85%D8%B1%D8%A9/IMG_1942.jpg" style="width: 200px;"/>
- <img alt="le café" src="https://cafezigomar.cf/images/headline-home.jpg" style="width: 200px;"/>
-كورسة متاع 11 سنة عرفت شلة متجددة متاع شخصيات تحتفل بقهوتها الاسبوعية مع السرفور حوسين. تقدم مجموعة شخصيات تتمنى تخرج معاها كل أسبوع، مكان تنجم تستعملو ديما وكل يوم من غير ما يولي ممل (متروك)، وسلسلة متاع مشاكل الي الناس يحبو يلمسوها باش يشوفوها تتحل.
-</p>
-]]>
-</description>
-<pubDate>thu, 27 Oct 2022 23:09:42 +0300</pubDate>
-<category>صحة شريبتكم !</category>
-<guid isPermaLink="false">https://zigomar007.github.io/rss-reader</guid>
+    function initialize() {
+      var feed = new google.feeds.Feed("https://arabi21.com/Rss/SectionNewsRSS?id=320");
+       feed.load(function(result) {
+        if (!result.error) {
+          var container = document.getElementById("feed4");
+          for (var i = 0; i < result.feed.entries.length; i++) {
+            var entry = result.feed.entries[i];
+			
+            var li = document.createElement("h3");
+            li.appendChild(document.createTextNode(entry.categories));
+            container.appendChild(li);
+		var div = document.createElement("h2");
+            div.appendChild(document.createTextNode(entry.title));
+            container.appendChild(div);
+	var li = document.createElement("h5");
+            li.appendChild(document.createTextNode(entry.publishedDate));
+            container.appendChild(li);
+           var p = document.createElement("p");
+            p.innerHTML = '<p' + entry.content  ;
+            container.appendChild(p);
+		
+            	
+			
+		var a = document.createElement("span");
+            a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
+            container.appendChild(a);
+		
+          }document.querySelector("h3").style.color = "Blue";
+        }
+      });
+    }
+    google.setOnLoadCallback(initialize);
+</script>
 
-</item>
-<item>
-<link>https://cafezigomar.cf</link>
+	
+<script>
+google.load("feeds", "25");
 
- <title>مسلسل جديد بنكهة رمضان زمان..الاصلية !</title>
-<description><![CDATA[
-<p>
-<img alt="le café" src="https://cafezigomar.cf/images/headline-home.jpg" style="width: 200px;"/>
-<img alt="la Deux" src="https://cafezigomar.cf/images/coffee2.jpg" style="width: 200px;" />
-كورسة متاع 11 سنة عرفت شلة متجددة متاع شخصيات تحتفل بقهوتها الاسبوعية مع السرفور حوسين. تقدم مجموعة شخصيات تتمنى تخرج معاها كل أسبوع، مكان تنجم تستعملو ديما وكل يوم من غير ما يولي ممل (متروك)، وسلسلة متاع مشاكل الي الناس يحبو يلمسوها باش يشوفوها تتحل.
-</p>
-]]>
-</description>
-<pubDate>thu, 22 Oct 2022 23:09:42 +0300</pubDate>
-<category>صحة شريبتكم !</category>
-<guid isPermaLink="false">https://zigomar007.github.io/rss-reader</guid>
+    function initialize() {
+      var feed = new google.feeds.Feed("https://zigomar007.github.io/rss-reader/feed.xml");
+       feed.load(function(result) {
+        if (!result.error) {
+          var container = document.getElementById("feed5");
+          for (var i = 0; i < result.feed.entries.length; i++) {
+            var entry = result.feed.entries[i];
+			
+	 var li = document.createElement("h3");
+            li.appendChild(document.createTextNode(entry.categories));
+            container.appendChild(li);
+			
+			var li = document.createElement("h2");
+            li.appendChild(document.createTextNode(entry.title));
+            container.appendChild(li);
+			
+			var li = document.createElement("h5");
+            li.appendChild(document.createTextNode(entry.publishedDate));
+            container.appendChild(li);
+			
+			var p = document.createElement("p");
+            p.innerHTML = '<p' + entry.content  ;
+            container.appendChild(p);
+		
+		 	
+			
+		var a = document.createElement("span");
+            a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
+            container.appendChild(a);
+		
+          }document.querySelector("h3").style.color = "Blue";
+        }
+      });
+    }
+    google.setOnLoadCallback(initialize);
+</script>
+<script>
+google.load("feeds", "26");
 
-</item>
-</channel>
-</rss>
+    function initialize() {
+      var feed = new google.feeds.Feed("https://raw.githubusercontent.com/zigomar007/cafezigomar.cf/main/feed.xml");
+       feed.load(function(result) {
+        if (!result.error) {
+          var container = document.getElementById("feed6");
+          for (var i = 0; i < result.feed.entries.length; i++) {
+            var entry = result.feed.entries[i];
+			
+	var li = document.createElement("h3");
+            li.appendChild(document.createTextNode(entry.categories));
+            container.appendChild(li);
+			
+			var li = document.createElement("h2");
+            li.appendChild(document.createTextNode(entry.title));
+            container.appendChild(li);
+			
+			var li = document.createElement("h5");
+            li.appendChild(document.createTextNode(entry.publishedDate));
+            container.appendChild(li);
+			
+			var p = document.createElement("p");
+            p.innerHTML = '<p' + entry.content  ;
+            container.appendChild(p);
+		
+			
+		var a = document.createElement("span");
+            a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
+            container.appendChild(a);
+		
+          }document.querySelector("h3").style.color = "Blue";
+        }
+      });
+    }
+    google.setOnLoadCallback(initialize);
+</script>
+<script>
+google.load("feeds", "27");
+
+    function initialize() {
+      var feed = new google.feeds.Feed("https://raw.githubusercontent.com/zigomar007/cafezigomar.ml/main/feed.xml");
+       feed.load(function(result) {
+        if (!result.error) {
+          var container = document.getElementById("feed7");
+          for (var i = 0; i < result.feed.entries.length; i++) {
+            var entry = result.feed.entries[i];
+			
+	var li = document.createElement("h3");
+            li.appendChild(document.createTextNode(entry.categories));
+            container.appendChild(li);
+			
+			var li = document.createElement("h2");
+            li.appendChild(document.createTextNode(entry.title));
+            container.appendChild(li);
+			
+			var li = document.createElement("h5");
+            li.appendChild(document.createTextNode(entry.publishedDate));
+            container.appendChild(li);
+			
+			var p = document.createElement("p");
+            p.innerHTML = '<p' + entry.content  ;
+            container.appendChild(p);
+		
+			
+		var a = document.createElement("span");
+            a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
+            container.appendChild(a);
+		
+          }document.querySelector("h3").style.color = "Blue";
+        }
+      });
+    }
+    google.setOnLoadCallback(initialize);
+</script> 
+
+</body>
+</html>
