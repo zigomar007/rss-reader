@@ -334,7 +334,9 @@ google.load("feeds", "27");
 			var p = document.createElement("p");
             p.innerHTML = '<p' + entry.content  ;
             container.appendChild(p);
-		
+	var a = document.createElement("span");
+            a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
+            container.appendChild(a);	
 			
 		var a = document.createElement("span");
             a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
