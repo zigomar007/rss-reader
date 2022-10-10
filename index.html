@@ -318,22 +318,27 @@ google.load("feeds", "27");
           var container = document.getElementById("feed7");
           for (var i = 0; i < result.feed.entries.length; i++) {
             var entry = result.feed.entries[i];
-			
-	var li = document.createElement("h3");
+		var li = document.createElement("h3");
             li.appendChild(document.createTextNode(entry.categories));
             container.appendChild(li);
-			
-			var li = document.createElement("h2");
-            li.appendChild(document.createTextNode(entry.title));
-            container.appendChild(li);
-			
+			 
+  
+		var div = document.createElement("h2");
+            div.appendChild(document.createTextNode(entry.title));
+            container.appendChild(div);
+	var img = document.createElement("img");
+            img.appendChild(document.createTextNode(entry.image));
+            container.appendChild(img);
+			var p = document.createElement("p");
+            p.appendChild(document.createTextNode(entry.author));
+            container.appendChild(p);
 			var li = document.createElement("h5");
             li.appendChild(document.createTextNode(entry.publishedDate));
             container.appendChild(li);
-			
-			var p = document.createElement("p");
+           var p = document.createElement("p");
             p.innerHTML = '<p' + entry.content  ;
-            container.appendChild(p);
+            container.appendChild(p);	
+	
 	var a = document.createElement("span");
             a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
             container.appendChild(a);	
