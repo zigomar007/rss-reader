@@ -79,9 +79,11 @@ google.load("feeds", "20");
           var container = document.getElementById("feed1");
           for (var i = 0; i < result.feed.entries.length; i++) {
             var entry = result.feed.entries[i];
-			
+	var p = document.createElement("p");
+            p.appendChild(document.createTextNode(entry.author));
+            container.appendChild(p);		
 		 var li = document.createElement("h3");
-            li.appendChild(document.createTextNode(entry.categories));
+            li.appendChild(document.createTextNode(entry.category));
             container.appendChild(li);
 			var li = document.createElement("h2");
             li.appendChild(document.createTextNode(entry.title));
@@ -89,9 +91,7 @@ google.load("feeds", "20");
 	var li = document.createElement('p');
             li.appendChild(document.createTextNode(entry.additional_image_link));
             container.appendChild(li);
-	var li = document.createElement('p');
-            li.appendChild(document.createTextNode(entry.image));
-            container.appendChild(li);	  
+		  
 			var li = document.createElement("h5");
             li.appendChild(document.createTextNode(entry.publishedDate));
             container.appendChild(li);
@@ -121,9 +121,11 @@ google.load("feeds", "22");
           var container = document.getElementById("feed2");
           for (var i = 0; i < result.feed.entries.length; i++) {
             var entry = result.feed.entries[i];
-			
+	var p = document.createElement("p");
+            p.appendChild(document.createTextNode(entry.author));
+            container.appendChild(p);		
             var li = document.createElement("h3");
-            li.appendChild(document.createTextNode(entry.categories));
+            li.appendChild(document.createTextNode(entry.category));
             container.appendChild(li);
 			
 			var li = document.createElement("h2");
@@ -160,16 +162,14 @@ google.load("feeds", "33");
             var entry = result.feed.entries[i];
 			
             var li = document.createElement("h3");
-            li.appendChild(document.createTextNode(entry.categories));
+            li.appendChild(document.createTextNode(entry.category));
             container.appendChild(li);
 			 
   
 		var div = document.createElement("h2");
             div.appendChild(document.createTextNode(entry.title));
             container.appendChild(div);
-	var img = document.createElement("img");
-            img.appendChild(document.createTextNode(entry.image));
-            container.appendChild(img);
+	
 			var p = document.createElement("p");
             p.appendChild(document.createTextNode(entry.author));
             container.appendChild(p);
@@ -205,14 +205,18 @@ google.load("feeds", "24");
             var entry = result.feed.entries[i];
 			
             var li = document.createElement("h3");
-            li.appendChild(document.createTextNode(entry.categories));
+            li.appendChild(document.createTextNode(entry.category));
             container.appendChild(li);
 		var div = document.createElement("h2");
             div.appendChild(document.createTextNode(entry.title));
             container.appendChild(div);
+	var p = document.createElement("p");
+            p.appendChild(document.createTextNode(entry.author));
+            container.appendChild(p);	  
 	var li = document.createElement("h5");
             li.appendChild(document.createTextNode(entry.publishedDate));
             container.appendChild(li);
+	
            var p = document.createElement("p");
             p.innerHTML = '<p' + entry.content  ;
             container.appendChild(p);
@@ -243,7 +247,7 @@ google.load("feeds", "25");
             var entry = result.feed.entries[i];
 			
 	 var li = document.createElement("h3");
-            li.appendChild(document.createTextNode(entry.categories));
+            li.appendChild(document.createTextNode(entry.category));
             container.appendChild(li);
 			
 			var li = document.createElement("h2");
@@ -253,7 +257,9 @@ google.load("feeds", "25");
 			var li = document.createElement("h5");
             li.appendChild(document.createTextNode(entry.publishedDate));
             container.appendChild(li);
-			
+		var p = document.createElement("p");
+            p.appendChild(document.createTextNode(entry.author));
+            container.appendChild(p);	
 			var p = document.createElement("p");
             p.innerHTML = '<p' + entry.content  ;
             container.appendChild(p);
@@ -282,7 +288,7 @@ google.load("feeds", "26");
             var entry = result.feed.entries[i];
 			
 	var li = document.createElement("h3");
-            li.appendChild(document.createTextNode(entry.categories));
+            li.appendChild(document.createTextNode(entry.category));
             container.appendChild(li);
 			
 			var li = document.createElement("h2");
@@ -292,7 +298,9 @@ google.load("feeds", "26");
 			var li = document.createElement("h5");
             li.appendChild(document.createTextNode(entry.publishedDate));
             container.appendChild(li);
-			
+		var p = document.createElement("p");
+            p.appendChild(document.createTextNode(entry.author));
+            container.appendChild(p);	
 			var p = document.createElement("p");
             p.innerHTML = '<p' + entry.content  ;
             container.appendChild(p);
@@ -319,17 +327,15 @@ google.load("feeds", "27");
           for (var i = 0; i < result.feed.entries.length; i++) {
             var entry = result.feed.entries[i];
 		var li = document.createElement("h3");
-            li.appendChild(document.createTextNode(entry.categories));
+            li.appendChild(document.createTextNode(entry.category));
             container.appendChild(li);
 			 
   
 		var div = document.createElement("h2");
             div.appendChild(document.createTextNode(entry.title));
             container.appendChild(div);
-	var img = document.createElement("img");
-            img.appendChild(document.createTextNode(entry.image));
-            container.appendChild(img);
-			var p = document.createElement("p");
+	
+	var p = document.createElement("p");
             p.appendChild(document.createTextNode(entry.author));
             container.appendChild(p);
 			var li = document.createElement("h5");
