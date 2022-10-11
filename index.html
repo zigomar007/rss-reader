@@ -83,7 +83,7 @@ google.load("feeds", "20");
             p.appendChild(document.createTextNode(entry.author));
             container.appendChild(p);		
 		 var li = document.createElement("h3");
-            li.appendChild(document.createTextNode(entry.category));
+            li.appendChild(document.createTextNode(entry.categories));
             container.appendChild(li);
 			var li = document.createElement("h2");
             li.appendChild(document.createTextNode(entry.title));
@@ -125,7 +125,7 @@ google.load("feeds", "22");
             p.appendChild(document.createTextNode(entry.author));
             container.appendChild(p);		
             var li = document.createElement("h3");
-            li.appendChild(document.createTextNode(entry.category));
+            li.appendChild(document.createTextNode(entry.categories));
             container.appendChild(li);
 			
 			var li = document.createElement("h2");
@@ -162,7 +162,7 @@ google.load("feeds", "33");
             var entry = result.feed.entries[i];
 			
             var li = document.createElement("h3");
-            li.appendChild(document.createTextNode(entry.category));
+            li.appendChild(document.createTextNode(entry.categories));
             container.appendChild(li);
 			 
   
@@ -205,7 +205,7 @@ google.load("feeds", "24");
             var entry = result.feed.entries[i];
 			
             var li = document.createElement("h3");
-            li.appendChild(document.createTextNode(entry.category));
+            li.appendChild(document.createTextNode(entry.categories));
             container.appendChild(li);
 		var div = document.createElement("h2");
             div.appendChild(document.createTextNode(entry.title));
@@ -247,7 +247,7 @@ google.load("feeds", "25");
             var entry = result.feed.entries[i];
 			
 	 var li = document.createElement("h3");
-            li.appendChild(document.createTextNode(entry.category));
+            li.appendChild(document.createTextNode(entry.categories));
             container.appendChild(li);
 			
 			var li = document.createElement("h2");
@@ -288,7 +288,7 @@ google.load("feeds", "26");
             var entry = result.feed.entries[i];
 			
 	var li = document.createElement("h3");
-            li.appendChild(document.createTextNode(entry.category));
+            li.appendChild(document.createTextNode(entry.categories));
             container.appendChild(li);
 			
 			var li = document.createElement("h2");
@@ -327,7 +327,7 @@ google.load("feeds", "27");
           for (var i = 0; i < result.feed.entries.length; i++) {
             var entry = result.feed.entries[i];
 		var li = document.createElement("h3");
-            li.appendChild(document.createTextNode(entry.category));
+            li.appendChild(document.createTextNode(entry.categories));
             container.appendChild(li);
 			 
   
