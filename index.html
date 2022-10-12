@@ -299,19 +299,19 @@ google.load("feeds", "26");
 			var li = document.createElement("h5");
             li.appendChild(document.createTextNode(entry.publishedDate));
             container.appendChild(li);
-		var p = document.createElement("h4");
-            p.appendChild(document.createTextNode(entry.author));
-            container.appendChild(p);	
-			var p = document.createElement("p");
-            p.innerHTML = '<p' + entry.content  ;
-            container.appendChild(p);
+		var li = document.createElement("h4");
+            li.appendChild(document.createTextNode(entry.author));
+            container.appendChild(li);	
+			var li = document.createElement("p");
+            li.innerHTML = '<p' + entry.content  ;
+            container.appendChild(li);
 		
 			
 		var a = document.createElement("span");
             a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
             container.appendChild(a);
 		
-          }document.querySelector("h3").style.color = "Blue";
+          }
         }
       });
     }
@@ -336,14 +336,14 @@ google.load("feeds", "27");
             div.appendChild(document.createTextNode(entry.title));
             container.appendChild(div);
 	
-	var p = document.createElement("h4");
-            p.appendChild(document.createTextNode(entry.author));
-            container.appendChild(p);
+	var li = document.createElement("h4");
+            li.appendChild(document.createTextNode(entry.author));
+            container.appendChild(li);
 			var li = document.createElement("h5");
             li.appendChild(document.createTextNode(entry.publishedDate));
             container.appendChild(li);
-           var p = document.createElement("p");
-            p.innerHTML = '<p' + entry.content  ;
+           var li = document.createElement("p");
+            li.innerHTML = '<p' + entry.content  ;
             container.appendChild(p);	
 	
 	var a = document.createElement("span");
