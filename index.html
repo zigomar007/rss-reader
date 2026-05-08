@@ -1,360 +1,284 @@
 <!doctype html>
 <html><head>
-	<meta charset="UTF-8">
-	<title>fetch</title>
-<script src="jquery.min.js"></script>
-<script src="gfapi.js"></script>
-<script src="https://www.google.com/jsapi"></script>
-<!--
-https://arabi21.com/Rss/SectionNewsRSS?id=320
-https://arabi21.com/Rss/SectionNewsRSS?id=421
-
-https://arabi21.com/Rss/SectionNewsRSS?id=305
--->
+<meta charset="UTF-8">
+<title>Agrégateur RSS</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <style>
-body {}
-img {width: 400px;}
-hr {background-color: #B0BEC5;height: 4px;}
-h2 {color: gray;}
-h3 {color: white;}
-h4 {color: gold;}
+body { font-family: Arial, sans-serif; margin: 20px; background: #f0f0f0; }
+img { max-width: 100%; height: auto; }
+hr { background-color: #B0BEC5; height: 2px; border: none; margin: 15px 0; }
+h2 { color: #2c3e50; margin: 10px 0 5px; font-size: 1.3em; }
+h3 { color: #2980b9; margin: 5px 0; font-size: 1.1em; }
+h4 { color: #e67e22; margin: 5px 0; }
+h5 { color: #7f8c8d; font-size: 0.85em; margin: 5px 0; }
 a {
-display: inline-block;
-border: 2px solid lightBlue;
+    display: inline-block;
+    border: 2px solid #3498db;
+    padding: 8px 15px;
+    text-decoration: none;
+    color: #3498db;
+    border-radius: 5px;
+    margin: 10px 0;
+    background: white;
 }
-p{
-font-family: '';
-font-size: 1.2em;
+a:hover {
+    background: #3498db;
+    color: white;
 }
-#feed1 {
-background-color: cyan;
-direction: rtl;
+p {
+    font-size: 1em;
+    line-height: 1.5;
+    margin: 8px 0;
 }
-#feed2 {
-background-color: orange;
-direction: rtl;
+.feed-box {
+    margin-bottom: 30px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
-#feed3 {
-background-color: yellow;
-direction: rtl;
-}#feed4 {
-background-color: magenta;
-direction: rtl;
-}#feed5 {
-background-color: fuchsia;
-direction: rtl;
+.feed-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 3px solid;
+    text-align: center;
 }
-#feed6 {
-background-color: lightBlue;
-direction: rtl;
+.article {
+    background: rgba(255,255,255,0.8);
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
 }
-#feed7 {
-background-color: brown;
-direction: rtl;
-}
-	</style>
-</head>	
+.article a { margin: 5px 0; }
+#feed1 { background-color: #e0f7fa; direction: rtl; }
+#feed2 { background-color: #fff3e0; direction: rtl; }
+#feed3 { background-color: #fff9c4; direction: rtl; }
+#feed4 { background-color: #fce4ec; direction: rtl; }
+#feed5 { background-color: #f3e5f5; direction: rtl; }
+#feed6 { background-color: #e1f5fe; direction: rtl; }
+#feed7 { background-color: #d7ccc8; direction: rtl; }
+.error-msg { color: red; background: #ffebee; padding: 10px; border-radius: 5px; text-align: center; }
+.loader { text-align: center; padding: 20px; color: #666; }
+</style>
+</head>
 <body>
-arabi21 408
-<p id="feed1"></p>
-aljazeera net
-<div id="feed2"></div>
-arabi21 316
-<div id="feed3"></div>
-arabi21 320
-<ul id="feed4"></ul>
-rss-reader feed
-<ul id="feed5"></ul>cafezigomarml feed
-<ul id="feed7"></ul>
-cafezigomarcf feed
-<ul id="feed6"></ul>
+
+<h1 style="text-align: center;">📰 Agrégateur de Flux RSS</h1>
+
+<div id="feed1" class="feed-box"><div class="feed-title">🌐 Arabi21 - 408</div><div class="loader">Chargement...</div></div>
+<div id="feed2" class="feed-box"><div class="feed-title">📺 Al Jazeera Net</div><div class="loader">Chargement...</div></div>
+<div id="feed3" class="feed-box"><div class="feed-title">🌐 Arabi21 - 316</div><div class="loader">Chargement...</div></div>
+<div id="feed4" class="feed-box"><div class="feed-title">🌐 Arabi21 - 320</div><div class="loader">Chargement...</div></div>
+<div id="feed5" class="feed-box"><div class="feed-title">📡 RSS Reader Feed</div><div class="loader">Chargement...</div></div>
+<div id="feed6" class="feed-box"><div class="feed-title">☕ CafeZigomar.cf Feed</div><div class="loader">Chargement...</div></div>
+<div id="feed7" class="feed-box"><div class="feed-title">☕ CafeZigomar.ml Feed</div><div class="loader">Chargement...</div></div>
 
 <script>
-google.load("feeds", "20");
+// Utiliser plusieurs proxies CORS pour plus de fiabilité
+const PROXIES = [
+    "https://api.allorigins.win/raw?url=",
+    "https://cors-anywhere.herokuapp.com/",
+    "https://thingproxy.freeboard.io/fetch/"
+];
 
-    function initialize() {
-      var feed = new google.feeds.Feed("https://arabi21.com/Rss/SectionNewsRSS?id=408");
-       feed.load(function(result) {
-        if (!result.error) {
-          var container = document.getElementById("feed1");
-          for (var i = 0; i < result.feed.entries.length; i++) {
-            var entry = result.feed.entries[i];
-	var p = document.createElement("p");
-            p.appendChild(document.createTextNode(entry.author));
-            container.appendChild(p);		
-		 var li = document.createElement("h3");
-            li.appendChild(document.createTextNode(entry.categories));
-            container.appendChild(li);
-			var li = document.createElement("h2");
-            li.appendChild(document.createTextNode(entry.title));
-            container.appendChild(li);
-	var li = document.createElement('p');
-            li.appendChild(document.createTextNode(entry.additional_image_link));
-            container.appendChild(li);
-		  
-			var li = document.createElement("h5");
-            li.appendChild(document.createTextNode(entry.publishedDate));
-            container.appendChild(li);
-			 var p = document.createElement("p");
-            p.innerHTML = '<p' + entry.content  ;
-            container.appendChild(p);
-		  
-		
-			
-		var a = document.createElement("span");
-            a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
-            container.appendChild(a);
-		
-          }document.querySelector("h3").style.color = "Blue";
-        }
-      });
+// Fonction pour essayer plusieurs proxies
+async function fetchWithProxy(url, proxyIndex = 0) {
+    if (proxyIndex >= PROXIES.length) {
+        throw new Error("Tous les proxies ont échoué");
     }
-    google.setOnLoadCallback(initialize);
-</script>
-<script>
-google.load("feeds", "22");
-
-    function initialize() {
-      var feed = new google.feeds.Feed("https://www.aljazeera.net/aljazeerarss/a7c186be-1baa-4bd4-9d80-a84db769f779/73d0e1b4-532f-45ef-b135-bfdff8b8cab9");
-      feed.load(function(result) {
-        if (!result.error) {
-          var container = document.getElementById("feed2");
-          for (var i = 0; i < result.feed.entries.length; i++) {
-            var entry = result.feed.entries[i];
-	var p = document.createElement("p");
-            p.appendChild(document.createTextNode(entry.author));
-            container.appendChild(p);		
-            var li = document.createElement("h3");
-            li.appendChild(document.createTextNode(entry.categories));
-            container.appendChild(li);
-			
-			var li = document.createElement("h2");
-			
-            li.appendChild(document.createTextNode(entry.title));
-            container.appendChild(li);
-			
-			var p = document.createElement("h5");
-            p.appendChild(document.createTextNode(entry.publishedDate));
-            container.appendChild(p);
-			
-			
-			var p = document.createElement('p');
-            p.appendChild(document.createTextNode(entry.contentSnippet));
-            container.appendChild(p);
-			var a = document.createElement("span");
-            a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
-            container.appendChild(a);
-          }
-        }
-      });
+    try {
+        const proxyUrl = PROXIES[proxyIndex] + encodeURIComponent(url);
+        const response = await fetch(proxyUrl);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return await response.text();
+    } catch (error) {
+        console.log(`Proxy ${proxyIndex + 1} échoué, essai suivant...`);
+        return fetchWithProxy(url, proxyIndex + 1);
     }
-    google.setOnLoadCallback(initialize);
-</script>
-<script>
-google.load("feeds", "33");
+}
 
-    function initialize() {
-      var feed = new google.feeds.Feed("https://arabi21.com/Rss/SectionNewsRSS?id=316&_ga=2.170017056.120769014.1616896951-217957536.1616896951");
-       feed.load(function(result) {
-        if (!result.error) {
-          var container = document.getElementById("feed3");
-          for (var i = 0; i < result.feed.entries.length; i++) {
-            var entry = result.feed.entries[i];
-			
-            var li = document.createElement("h3");
-            li.appendChild(document.createTextNode(entry.categories));
-            container.appendChild(li);
-			 
-  
-		var div = document.createElement("h2");
-            div.appendChild(document.createTextNode(entry.title));
-            container.appendChild(div);
-	
-			var p = document.createElement("p");
-            p.appendChild(document.createTextNode(entry.author));
-            container.appendChild(p);
-			var li = document.createElement("h5");
-            li.appendChild(document.createTextNode(entry.publishedDate));
-            container.appendChild(li);
-           var p = document.createElement("p");
-            p.innerHTML = '<p' + entry.content  ;
-            container.appendChild(p);
-		
-            	
-			
-		var a = document.createElement("span");
-            a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
-            container.appendChild(a);
-		
-          }document.querySelector("h3").style.color = "Blue";
-        }
-      });
+// Configuration des flux
+const feeds = [
+    { id: "feed1", url: "https://arabi21.com/Rss/SectionNewsRSS?id=408", type: "rss" },
+    { id: "feed2", url: "https://www.aljazeera.net/aljazeerarss/a7c186be-1baa-4bd4-9d80-a84db769f779/73d0e1b4-532f-45ef-b135-bfdff8b8cab9", type: "rss" },
+    { id: "feed3", url: "https://arabi21.com/Rss/SectionNewsRSS?id=316", type: "rss" },
+    { id: "feed4", url: "https://arabi21.com/Rss/SectionNewsRSS?id=320", type: "rss" },
+    { id: "feed5", url: "https://zigomar007.github.io/rss-reader/feed.xml", type: "atom" },
+    { id: "feed6", url: "https://zigomar007.github.io/zigomar.cf/zigomar.xml", type: "rss" },
+    { id: "feed7", url: "https://zigomar007.github.io/cafezigomar.ml/feed.xml", type: "rss" }
+];
+
+// Fonction pour parser le XML et extraire les articles
+function parseRSS(xmlText, feedId) {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+    
+    // Vérifier les erreurs de parsing
+    if (xmlDoc.querySelector("parsererror")) {
+        throw new Error("Erreur de parsing XML");
     }
-    google.setOnLoadCallback(initialize);
-</script>
-
-<script>
-google.load("feeds", "24");
-
-    function initialize() {
-      var feed = new google.feeds.Feed("https://arabi21.com/Rss/SectionNewsRSS?id=320");
-       feed.load(function(result) {
-        if (!result.error) {
-          var container = document.getElementById("feed4");
-          for (var i = 0; i < result.feed.entries.length; i++) {
-            var entry = result.feed.entries[i];
-			
-            var li = document.createElement("h3");
-            li.appendChild(document.createTextNode(entry.categories));
-            container.appendChild(li);
-		var div = document.createElement("h2");
-            div.appendChild(document.createTextNode(entry.title));
-            container.appendChild(div);
-	var p = document.createElement("p");
-            p.appendChild(document.createTextNode(entry.author));
-            container.appendChild(p);	  
-	var li = document.createElement("h5");
-            li.appendChild(document.createTextNode(entry.publishedDate));
-            container.appendChild(li);
-	
-           var p = document.createElement("p");
-            p.innerHTML = '<p' + entry.content  ;
-            container.appendChild(p);
-		
-            	
-			
-		var a = document.createElement("span");
-            a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
-            container.appendChild(a);
-		
-          }document.querySelector("h3").style.color = "Blue";
-        }
-      });
+    
+    let items = [];
+    
+    // Essayer différents formats RSS
+    items = xmlDoc.querySelectorAll("item");
+    if (items.length === 0) {
+        items = xmlDoc.querySelectorAll("entry");
     }
-    google.setOnLoadCallback(initialize);
-</script>
-
-	
-<script>
-google.load("feeds", "25");
-
-    function initialize() {
-      var feed = new google.feeds.Feed("https://zigomar007.github.io/rss-reader/feed.xml");
-       feed.load(function(result) {
-        if (!result.error) {
-          var container = document.getElementById("feed5");
-          for (var i = 0; i < result.feed.entries.length; i++) {
-            var entry = result.feed.entries[i];
-			
-	 var li = document.createElement("h3");
-            li.appendChild(document.createTextNode(entry.categories));
-            container.appendChild(li);
-			
-			var li = document.createElement("h2");
-            li.appendChild(document.createTextNode(entry.title));
-            container.appendChild(li);
-			
-			var li = document.createElement("h5");
-            li.appendChild(document.createTextNode(entry.publishedDate));
-            container.appendChild(li);
-		var p = document.createElement("p");
-            p.appendChild(document.createTextNode(entry.author));
-            container.appendChild(p);	
-			var p = document.createElement("p");
-            p.innerHTML = '<p' + entry.content  ;
-            container.appendChild(p);
-		
-		 	
-			
-		var a = document.createElement("span");
-            a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
-            container.appendChild(a);
-		
-          }document.querySelector("h3").style.color = "Blue";
-        }
-      });
+    if (items.length === 0) {
+        // Format RSS avec namespaces
+        items = xmlDoc.querySelectorAll("rss > channel > item");
     }
-    google.setOnLoadCallback(initialize);
-</script>28
-<script>
-google.load("feeds", "27");
-
-    function initialize() {
-      var feed = new google.feeds.Feed("https://zigomar007.github.io/cafezigomar.ml/feed.xml");
-       feed.load(function(result) {
-        if (!result.error) {
-          var container = document.getElementById("feed7");
-          for (var i = 0; i < result.feed.entries.length; i++) {
-            var entry = result.feed.entries[i];
-			
-	var li = document.createElement("h3");
-            li.appendChild(document.createTextNode(entry.categories));
-            container.appendChild(li);
-			
-			var li = document.createElement("h2");
-            li.appendChild(document.createTextNode(entry.title));
-            container.appendChild(li);
-			
-			var li = document.createElement("h5");
-            li.appendChild(document.createTextNode(entry.publishedDate));
-            container.appendChild(li);
-		var li = document.createElement("h4");
-            li.appendChild(document.createTextNode(entry.author));
-            container.appendChild(li);	
-			var li = document.createElement("p");
-            li.innerHTML = '<p' + entry.content  ;
-            container.appendChild(li);
-		
-			
-		var a = document.createElement("span");
-            a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
-            container.appendChild(a);
-		
-          }
-        }
-      });
+    
+    const container = document.getElementById(feedId);
+    // Supprimer le loader et garder le titre
+    while (container.children.length > 1) {
+        container.removeChild(container.lastChild);
     }
-    google.setOnLoadCallback(initialize);
-</script>
-<script>
-google.load("feeds", "26");
-
-    function initialize() {
-      var feed = new google.feeds.Feed("https://zigomar007.github.io/zigomar.cf/zigomar.xml");
-       feed.load(function(result) {
-        if (!result.error) {
-          var container = document.getElementById("feed6");
-          for (var i = 0; i < result.feed.entries.length; i++) {
-            var entry = result.feed.entries[i];
-			
-	var li = document.createElement("h3");
-            li.appendChild(document.createTextNode(entry.categories));
-            container.appendChild(li);
-			
-			var li = document.createElement("h2");
-            li.appendChild(document.createTextNode(entry.title));
-            container.appendChild(li);
-			
-			var li = document.createElement("h5");
-            li.appendChild(document.createTextNode(entry.publishedDate));
-            container.appendChild(li);
-		var li = document.createElement("h4");
-            li.appendChild(document.createTextNode(entry.author));
-            container.appendChild(li);	
-			var li = document.createElement("p");
-            li.innerHTML = '<p' + entry.content  ;
-            container.appendChild(li);
-		
-			
-		var a = document.createElement("span");
-            a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
-            container.appendChild(a);
-		
-          }
-        }
-      });
+    
+    if (items.length === 0) {
+        container.innerHTML += '<div class="error-msg">❌ Aucun article trouvé. Le flux peut être vide ou inaccessible.</div>';
+        return;
     }
-    google.setOnLoadCallback(initialize);
+    
+    // Afficher chaque article
+    for (let i = 0; i < Math.min(items.length, 10); i++) {
+        const item = items[i];
+        
+        // Extraire les données avec plusieurs possibilités
+        let title = "Sans titre";
+        let link = "#";
+        let pubDate = "Date non disponible";
+        let author = "Auteur inconnu";
+        let categories = "Non catégorisé";
+        let content = "Aucun contenu disponible";
+        
+        // Titre
+        const titleElem = item.querySelector("title");
+        if (titleElem) title = titleElem.textContent;
+        
+        // Lien
+        const linkElem = item.querySelector("link");
+        const guidElem = item.querySelector("guid");
+        if (linkElem) link = linkElem.textContent;
+        else if (guidElem) link = guidElem.textContent;
+        
+        // Date
+        const dateElem = item.querySelector("pubDate") || item.querySelector("published") || item.querySelector("dc|date");
+        if (dateElem) pubDate = dateElem.textContent;
+        
+        // Auteur
+        const authorElem = item.querySelector("author") || item.querySelector("dc|creator") || item.querySelector("creator");
+        if (authorElem) author = authorElem.textContent;
+        
+        // Catégories
+        const catElem = item.querySelector("category");
+        if (catElem) categories = catElem.textContent;
+        
+        // Contenu
+        const descElem = item.querySelector("description");
+        const contentElem = item.querySelector("content") || item.querySelector("encoded");
+        if (descElem) content = descElem.textContent;
+        else if (contentElem) content = contentElem.textContent;
+        
+        // Nettoyer le HTML du contenu
+        content = content.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+        if (content.length > 300) content = content.substring(0, 300) + "...";
+        
+        // Formater la date
+        let formattedDate = pubDate;
+        try {
+            const date = new Date(pubDate);
+            if (!isNaN(date.getTime())) {
+                formattedDate = date.toLocaleDateString('fr-FR', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+        } catch(e) {}
+        
+        // Créer l'article
+        const articleDiv = document.createElement("div");
+        articleDiv.className = "article";
+        
+        const catElemH3 = document.createElement("h3");
+        catElemH3.textContent = "🏷️ " + categories;
+        articleDiv.appendChild(catElemH3);
+        
+        const titleElemH2 = document.createElement("h2");
+        titleElemH2.textContent = title;
+        articleDiv.appendChild(titleElemH2);
+        
+        const authorElemP = document.createElement("p");
+        authorElemP.innerHTML = "✍️ <strong>Auteur:</strong> " + author;
+        articleDiv.appendChild(authorElemP);
+        
+        const dateElemH5 = document.createElement("h5");
+        dateElemH5.textContent = "📅 " + formattedDate;
+        articleDiv.appendChild(dateElemH5);
+        
+        const contentElemP = document.createElement("p");
+        contentElemP.textContent = content;
+        articleDiv.appendChild(contentElemP);
+        
+        const linkElemA = document.createElement("a");
+        linkElemA.href = link;
+        linkElemA.target = "_blank";
+        linkElemA.textContent = "📖 اقرأ المزيد (Lire la suite)";
+        articleDiv.appendChild(linkElemA);
+        
+        const hr = document.createElement("hr");
+        articleDiv.appendChild(hr);
+        
+        container.appendChild(articleDiv);
+    }
+    
+    // Ajouter le compteur
+    const counter = document.createElement("p");
+    counter.style.textAlign = "center";
+    counter.style.fontSize = "0.85em";
+    counter.style.color = "#666";
+    counter.style.marginTop = "10px";
+    counter.innerHTML = `✅ ${Math.min(items.length, 10)} article(s) chargé(s)`;
+    container.appendChild(counter);
+}
+
+// Charger chaque flux avec gestion d'erreur améliorée
+async function loadFeed(feed) {
+    const container = document.getElementById(feed.id);
+    
+    try {
+        const xmlText = await fetchWithProxy(feed.url, 0);
+        parseRSS(xmlText, feed.id);
+    } catch (error) {
+        console.error(`Erreur pour ${feed.id}:`, error);
+        // Supprimer le loader
+        while (container.children.length > 1) {
+            container.removeChild(container.lastChild);
+        }
+        container.innerHTML += `<div class="error-msg">
+            ❌ Impossible de charger le flux.<br>
+            <small>URL: ${feed.url}</small><br>
+            <small>Erreur: ${error.message}</small>
+        </div>`;
+        
+        // Essayer un flux de secours pour les feeds Arabi21
+        if (feed.url.includes("arabi21")) {
+            container.innerHTML += `<div class="error-msg">
+                💡 <strong>Astuce:</strong> Le site Arabi21 peut bloquer les requêtes.<br>
+                Essayez d'ouvrir cette page dans un navigateur avec une extension CORS ou utilisez un VPN.
+            </div>`;
+        }
+    }
+}
+
+// Lancer le chargement de tous les flux
+feeds.forEach(feed => loadFeed(feed));
 </script>
 
-</body></html>
+</body>
+</html>
