@@ -1,7 +1,7 @@
 <!doctype html>
 <html><head>
 <meta charset="UTF-8">
-<title>Agrأ©gateur RSS</title>
+<title>Agrégateur RSS</title>
 <style>
 body { font-family: Arial, sans-serif; margin: 20px; background: #f0f0f0; }
 hr { background-color: #B0BEC5; height: 2px; border: none; margin: 15px 0; }
@@ -54,21 +54,21 @@ p { font-size: 1em; line-height: 1.5; margin: 8px 0; }
 </head>
 <body>
 
-<h1 style="text-align: center;">ًں“° Agrأ©gateur de Flux RSS</h1>
+<h1 style="text-align: center;">📰 Agrégateur de Flux RSS</h1>
 
-<div id="feed1" class="feed-box"><div class="feed-title">ًںŒگ Arabi21 - 408</div><div class="loader">Chargement...</div></div>
-<div id="feed2" class="feed-box"><div class="feed-title">ًں“؛ Al Jazeera Net</div><div class="loader">Chargement...</div></div>
-<div id="feed3" class="feed-box"><div class="feed-title">ًںŒگ Arabi21 - 316</div><div class="loader">Chargement...</div></div>
-<div id="feed4" class="feed-box"><div class="feed-title">ًںŒگ Arabi21 - 320</div><div class="loader">Chargement...</div></div>
-<div id="feed5" class="feed-box"><div class="feed-title">ًں“، RSS Reader Feed</div><div class="loader">Chargement...</div></div>
-<div id="feed6" class="feed-box"><div class="feed-title">âک• CafeZigomar.cf Feed</div><div class="loader">Chargement...</div></div>
-<div id="feed7" class="feed-box"><div class="feed-title">âک• CafeZigomar.ml Feed</div><div class="loader">Chargement...</div></div>
+<div id="feed1" class="feed-box"><div class="feed-title">🌐 Arabi21 - 408</div><div class="loader">Chargement...</div></div>
+<div id="feed2" class="feed-box"><div class="feed-title">📺 Al Jazeera Net</div><div class="loader">Chargement...</div></div>
+<div id="feed3" class="feed-box"><div class="feed-title">🌐 Arabi21 - 316</div><div class="loader">Chargement...</div></div>
+<div id="feed4" class="feed-box"><div class="feed-title">🌐 Arabi21 - 320</div><div class="loader">Chargement...</div></div>
+<div id="feed5" class="feed-box"><div class="feed-title">📡 RSS Reader Feed</div><div class="loader">Chargement...</div></div>
+<div id="feed6" class="feed-box"><div class="feed-title">☕ CafeZigomar.cf Feed</div><div class="loader">Chargement...</div></div>
+<div id="feed7" class="feed-box"><div class="feed-title">☕ CafeZigomar.ml Feed</div><div class="loader">Chargement...</div></div>
 
 <script>
-// Utiliser rss2json.com (service gratuit, pas besoin de clأ© API)
+// Utiliser rss2json.com (service gratuit, pas besoin de clé API)
 // Note: Ce service peut avoir des limitations, mais c'est le plus fiable actuellement
 
-// Configuration des flux avec leurs URLs encodأ©es pour rss2json
+// Configuration des flux avec leurs URLs encodées pour rss2json
 const feeds = [
     { id: "feed1", url: "https://arabi21.com/Rss/SectionNewsRSS?id=408" },
     { id: "feed2", url: "https://www.aljazeera.net/aljazeerarss/a7c186be-1baa-4bd4-9d80-a84db769f779/73d0e1b4-532f-45ef-b135-bfdff8b8cab9" },
@@ -90,7 +90,7 @@ function displayArticles(containerId, items, feedTitle) {
     }
     
     if (!items || items.length === 0) {
-        container.innerHTML += '<div class="error-msg">â‌Œ Aucun article disponible dans ce flux.</div>';
+        container.innerHTML += '<div class="error-msg">❌ Aucun article disponible dans ce flux.</div>';
         return;
     }
     
@@ -102,7 +102,7 @@ function displayArticles(containerId, items, feedTitle) {
         const link = item.link || "#";
         const pubDate = item.pubDate || item.published || "Date non disponible";
         const author = item.author || item.creator || "Auteur inconnu";
-        const categories = item.categories ? item.categories.join(", ") : "Non catأ©gorisأ©";
+        const categories = item.categories ? item.categories.join(", ") : "Non catégorisé";
         let content = item.description || item.content || item.summary || "Aucun contenu disponible";
         
         // Nettoyer le contenu
@@ -121,12 +121,12 @@ function displayArticles(containerId, items, feedTitle) {
             }
         } catch(e) {}
         
-        // Crأ©er l'article
+        // Créer l'article
         const articleDiv = document.createElement("div");
         articleDiv.className = "article";
         
         const catElem = document.createElement("h3");
-        catElem.textContent = "ًںڈ·ï¸ڈ " + categories;
+        catElem.textContent = "🏷️ " + categories;
         articleDiv.appendChild(catElem);
         
         const titleElem = document.createElement("h2");
@@ -134,11 +134,11 @@ function displayArticles(containerId, items, feedTitle) {
         articleDiv.appendChild(titleElem);
         
         const authorElem = document.createElement("p");
-        authorElem.innerHTML = "âœچï¸ڈ <strong>Auteur:</strong> " + author;
+        authorElem.innerHTML = "✍️ <strong>Auteur:</strong> " + author;
         articleDiv.appendChild(authorElem);
         
         const dateElem = document.createElement("h5");
-        dateElem.textContent = "ًں“… " + formattedDate;
+        dateElem.textContent = "📅 " + formattedDate;
         articleDiv.appendChild(dateElem);
         
         const contentElem = document.createElement("p");
@@ -148,7 +148,7 @@ function displayArticles(containerId, items, feedTitle) {
         const linkElem = document.createElement("a");
         linkElem.href = link;
         linkElem.target = "_blank";
-        linkElem.textContent = "ًں“– ط§ظ‚ط±ط£ ط§ظ„ظ…ط²ظٹط¯ (Lire la suite)";
+        linkElem.textContent = "📖 اقرأ المزيد (Lire la suite)";
         articleDiv.appendChild(linkElem);
         
         const hr = document.createElement("hr");
@@ -163,7 +163,7 @@ function displayArticles(containerId, items, feedTitle) {
     counter.style.fontSize = "0.85em";
     counter.style.color = "#666";
     counter.style.marginTop = "10px";
-    counter.innerHTML = `âœ… ${Math.min(items.length, 10)} article(s) chargأ©(s)`;
+    counter.innerHTML = `✅ ${Math.min(items.length, 10)} article(s) chargé(s)`;
     container.appendChild(counter);
 }
 
@@ -187,8 +187,8 @@ async function loadFeedViaRss2Json(feed) {
             container.removeChild(container.lastChild);
         }
         container.innerHTML += `<div class="error-msg">
-            â‌Œ Impossible de charger: ${feed.url}<br>
-            <small>Le service RSS2JSON peut أھtre temporairement indisponible.</small>
+            ❌ Impossible de charger: ${feed.url}<br>
+            <small>Le service RSS2JSON peut être temporairement indisponible.</small>
         </div>`;
     }
 }
@@ -217,12 +217,12 @@ async function loadAllFeeds() {
         // Essayer rss2json d'abord
         await loadFeedViaRss2Json(feed);
         
-        // Petit dأ©lai pour ne pas surcharger les APIs
+        // Petit délai pour ne pas surcharger les APIs
         await new Promise(resolve => setTimeout(resolve, 500));
     }
 }
 
-// Dأ©marrer le chargement
+// Démarrer le chargement
 loadAllFeeds();
 </script>
 
