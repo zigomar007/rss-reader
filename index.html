@@ -1,304 +1,213 @@
 <!doctype html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Flux RSS - Agrégateur</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f5f5f5;
-        }
-        img { width: 400px; max-width: 100%; }
-        hr { background-color: #B0BEC5; height: 2px; border: none; }
-        h2 { color: #2c3e50; }
-        h3 { color: #2980b9; margin-bottom: 5px; }
-        h4 { color: #e67e22; }
-        h5 { color: #7f8c8d; font-size: 0.9em; }
-        a {
-            display: inline-block;
-            border: 2px solid #3498db;
-            padding: 8px 15px;
-            text-decoration: none;
-            color: #3498db;
-            border-radius: 5px;
-            margin: 10px 0;
-        }
-        a:hover {
-            background-color: #3498db;
-            color: white;
-        }
-        p {
-            font-size: 1em;
-            line-height: 1.6;
-        }
-        .feed-container {
-            margin-bottom: 30px;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        #feed1 { background-color: #e0f7fa; direction: rtl; }
-        #feed2 { background-color: #fff3e0; direction: rtl; }
-        #feed3 { background-color: #fff9c4; direction: rtl; }
-        #feed4 { background-color: #fce4ec; direction: rtl; }
-        #feed5 { background-color: #f3e5f5; direction: rtl; }
-        #feed6 { background-color: #e1f5fe; direction: rtl; }
-        #feed7 { background-color: #d7ccc8; direction: rtl; }
-        .feed-title {
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid currentColor;
-        }
-    </style>
-</head>  
+<html><head>
+<meta charset="UTF-8">
+<title>Agrégateur RSS</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<style>
+body { font-family: Arial, sans-serif; margin: 20px; background: #f0f0f0; }
+img { max-width: 100%; height: auto; }
+hr { background-color: #B0BEC5; height: 2px; border: none; margin: 15px 0; }
+h2 { color: #2c3e50; margin: 10px 0 5px; }
+h3 { color: #2980b9; margin: 5px 0; font-size: 1.1em; }
+h4 { color: #e67e22; margin: 5px 0; }
+h5 { color: #7f8c8d; font-size: 0.85em; margin: 5px 0; }
+a {
+    display: inline-block;
+    border: 2px solid #3498db;
+    padding: 8px 15px;
+    text-decoration: none;
+    color: #3498db;
+    border-radius: 5px;
+    margin: 10px 0;
+    background: white;
+}
+a:hover {
+    background: #3498db;
+    color: white;
+}
+p {
+    font-size: 1em;
+    line-height: 1.5;
+    margin: 8px 0;
+}
+.feed-box {
+    margin-bottom: 30px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.feed-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 3px solid;
+    text-align: center;
+}
+.article {
+    background: rgba(255,255,255,0.7);
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+}
+.article a { margin: 5px 0; }
+#feed1 { background-color: #e0f7fa; direction: rtl; }
+#feed2 { background-color: #fff3e0; direction: rtl; }
+#feed3 { background-color: #fff9c4; direction: rtl; }
+#feed4 { background-color: #fce4ec; direction: rtl; }
+#feed5 { background-color: #f3e5f5; direction: rtl; }
+#feed6 { background-color: #e1f5fe; direction: rtl; }
+#feed7 { background-color: #d7ccc8; direction: rtl; }
+.error-msg { color: red; background: #ffebee; padding: 10px; border-radius: 5px; text-align: center; }
+.loader { text-align: center; padding: 20px; color: #666; }
+</style>
+</head>
 <body>
-    <h1>📰 Agrégateur de Flux RSS</h1>
-    
-    <div class="feed-container" id="feed1">
-        <div class="feed-title">🌐 Arabi21 - 408</div>
-    </div>
-    
-    <div class="feed-container" id="feed2">
-        <div class="feed-title">📺 Al Jazeera Net</div>
-    </div>
-    
-    <div class="feed-container" id="feed3">
-        <div class="feed-title">🌐 Arabi21 - 316</div>
-    </div>
-    
-    <div class="feed-container" id="feed4">
-        <div class="feed-title">🌐 Arabi21 - 320</div>
-    </div>
-    
-    <div class="feed-container" id="feed5">
-        <div class="feed-title">📡 RSS Reader Feed</div>
-    </div>
-    
-    <div class="feed-container" id="feed6">
-        <div class="feed-title">☕ CafeZigomar.cf Feed</div>
-    </div>
-    
-    <div class="feed-container" id="feed7">
-        <div class="feed-title">☕ CafeZigomar.ml Feed</div>
-    </div>
 
-    <script src="https://www.google.com/jsapi"></script>
-    <script>
-        // Configuration des flux RSS avec leurs conteneurs respectifs
-        const feeds = [
-            {
-                id: "feed1",
-                url: "https://arabi21.com/Rss/SectionNewsRSS?id=408",
-                titleKey: "title",
-                showCategories: true,
-                showAuthor: true,
-                showContent: true
-            },
-            {
-                id: "feed2",
-                url: "https://www.aljazeera.net/aljazeerarss/a7c186be-1baa-4bd4-9d80-a84db769f779/73d0e1b4-532f-45ef-b135-bfdff8b8cab9",
-                titleKey: "title",
-                showCategories: true,
-                showAuthor: true,
-                showContent: true,
-                useContentSnippet: true
-            },
-            {
-                id: "feed3",
-                url: "https://arabi21.com/Rss/SectionNewsRSS?id=316",
-                titleKey: "title",
-                showCategories: true,
-                showAuthor: true,
-                showContent: true
-            },
-            {
-                id: "feed4",
-                url: "https://arabi21.com/Rss/SectionNewsRSS?id=320",
-                titleKey: "title",
-                showCategories: true,
-                showAuthor: true,
-                showContent: true
-            },
-            {
-                id: "feed5",
-                url: "https://zigomar007.github.io/rss-reader/feed.xml",
-                titleKey: "title",
-                showCategories: true,
-                showAuthor: true,
-                showContent: true
-            },
-            {
-                id: "feed6",
-                url: "https://zigomar007.github.io/zigomar.cf/zigomar.xml",
-                titleKey: "title",
-                showCategories: true,
-                showAuthor: true,
-                showContent: true
-            },
-            {
-                id: "feed7",
-                url: "https://zigomar007.github.io/cafezigomar.ml/feed.xml",
-                titleKey: "title",
-                showCategories: true,
-                showAuthor: true,
-                showContent: true
+<h1 style="text-align: center;">📰 Agrégateur de Flux RSS</h1>
+
+<div id="feed1" class="feed-box"><div class="feed-title">🌐 Arabi21 - 408</div><div class="loader">Chargement...</div></div>
+<div id="feed2" class="feed-box"><div class="feed-title">📺 Al Jazeera Net</div><div class="loader">Chargement...</div></div>
+<div id="feed3" class="feed-box"><div class="feed-title">🌐 Arabi21 - 316</div><div class="loader">Chargement...</div></div>
+<div id="feed4" class="feed-box"><div class="feed-title">🌐 Arabi21 - 320</div><div class="loader">Chargement...</div></div>
+<div id="feed5" class="feed-box"><div class="feed-title">📡 RSS Reader Feed</div><div class="loader">Chargement...</div></div>
+<div id="feed6" class="feed-box"><div class="feed-title">☕ CafeZigomar.cf Feed</div><div class="loader">Chargement...</div></div>
+<div id="feed7" class="feed-box"><div class="feed-title">☕ CafeZigomar.ml Feed</div><div class="loader">Chargement...</div></div>
+
+<script>
+// Service proxy CORS gratuit pour contourner les restrictions cross-origin
+const CORS_PROXY = "https://api.allorigins.win/raw?url=";
+
+// Configuration des flux
+const feeds = [
+    { id: "feed1", url: "https://arabi21.com/Rss/SectionNewsRSS?id=408" },
+    { id: "feed2", url: "https://www.aljazeera.net/aljazeerarss/a7c186be-1baa-4bd4-9d80-a84db769f779/73d0e1b4-532f-45ef-b135-bfdff8b8cab9" },
+    { id: "feed3", url: "https://arabi21.com/Rss/SectionNewsRSS?id=316" },
+    { id: "feed4", url: "https://arabi21.com/Rss/SectionNewsRSS?id=320" },
+    { id: "feed5", url: "https://zigomar007.github.io/rss-reader/feed.xml" },
+    { id: "feed6", url: "https://zigomar007.github.io/zigomar.cf/zigomar.xml" },
+    { id: "feed7", url: "https://zigomar007.github.io/cafezigomar.ml/feed.xml" }
+];
+
+// Fonction pour parser le XML
+function parseRSS(xmlText, feedId) {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+    
+    // Vérifier les erreurs de parsing
+    if (xmlDoc.querySelector("parsererror")) {
+        throw new Error("Erreur de parsing XML");
+    }
+    
+    // Extraire les articles selon le format RSS (balises <item> ou <entry>)
+    let items = xmlDoc.querySelectorAll("item");
+    if (items.length === 0) {
+        items = xmlDoc.querySelectorAll("entry");
+    }
+    
+    const container = document.getElementById(feedId);
+    // Supprimer le loader et garder le titre
+    while (container.children.length > 1) {
+        container.removeChild(container.lastChild);
+    }
+    
+    if (items.length === 0) {
+        container.innerHTML += '<div class="error-msg">❌ Aucun article trouvé dans ce flux.</div>';
+        return;
+    }
+    
+    // Afficher chaque article
+    for (let i = 0; i < Math.min(items.length, 15); i++) {
+        const item = items[i];
+        
+        const title = item.querySelector("title")?.textContent || "Sans titre";
+        const link = item.querySelector("link")?.textContent || 
+                     item.querySelector("guid")?.textContent || "#";
+        const pubDate = item.querySelector("pubDate")?.textContent || 
+                        item.querySelector("published")?.textContent || 
+                        "Date non disponible";
+        const author = item.querySelector("author")?.textContent || 
+                       item.querySelector("dc:creator")?.textContent || 
+                       "Auteur inconnu";
+        const categories = item.querySelector("category")?.textContent || "Non catégorisé";
+        
+        // Contenu
+        let content = item.querySelector("description")?.textContent || 
+                      item.querySelector("content")?.textContent ||
+                      item.querySelector("summary")?.textContent ||
+                      "Aucun contenu disponible";
+        
+        // Nettoyer le HTML du contenu
+        content = content.replace(/<[^>]*>/g, ' ').substring(0, 300);
+        
+        // Créer l'article
+        const articleDiv = document.createElement("div");
+        articleDiv.className = "article";
+        
+        const catElem = document.createElement("h3");
+        catElem.textContent = "🏷️ " + categories;
+        articleDiv.appendChild(catElem);
+        
+        const titleElem = document.createElement("h2");
+        titleElem.textContent = title;
+        articleDiv.appendChild(titleElem);
+        
+        const authorElem = document.createElement("p");
+        authorElem.innerHTML = "✍️ <strong>Auteur:</strong> " + author;
+        articleDiv.appendChild(authorElem);
+        
+        const dateElem = document.createElement("h5");
+        dateElem.textContent = "📅 " + new Date(pubDate).toLocaleDateString('fr-FR');
+        articleDiv.appendChild(dateElem);
+        
+        const contentElem = document.createElement("p");
+        contentElem.textContent = content + (content.length >= 300 ? "..." : "");
+        articleDiv.appendChild(contentElem);
+        
+        const linkElem = document.createElement("a");
+        linkElem.href = link;
+        linkElem.target = "_blank";
+        linkElem.textContent = "📖 اقرأ المزيد (Lire la suite)";
+        articleDiv.appendChild(linkElem);
+        
+        const hr = document.createElement("hr");
+        articleDiv.appendChild(hr);
+        
+        container.appendChild(articleDiv);
+    }
+    
+    // Ajouter le compteur
+    const counter = document.createElement("p");
+    counter.style.textAlign = "center";
+    counter.style.fontSize = "0.85em";
+    counter.style.color = "#666";
+    counter.style.marginTop = "10px";
+    counter.innerHTML = `✅ ${Math.min(items.length, 15)} article(s) chargé(s)`;
+    container.appendChild(counter);
+}
+
+// Charger chaque flux
+feeds.forEach(feed => {
+    const proxyUrl = CORS_PROXY + encodeURIComponent(feed.url);
+    
+    fetch(proxyUrl)
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return response.text();
+        })
+        .then(xmlText => {
+            parseRSS(xmlText, feed.id);
+        })
+        .catch(error => {
+            console.error(`Erreur pour ${feed.id}:`, error);
+            const container = document.getElementById(feed.id);
+            while (container.children.length > 1) {
+                container.removeChild(container.lastChild);
             }
-        ];
+            container.innerHTML += `<div class="error-msg">❌ Impossible de charger le flux. Vérifiez l'URL ou le CORS.<br>${error.message}</div>`;
+        });
+});
+</script>
 
-        // Charger l'API Google Feeds (version stable 1)
-        google.load("feeds", "1");
-
-        // Fonction pour formater la date
-        function formatDate(dateString) {
-            if (!dateString) return "Date non disponible";
-            try {
-                const date = new Date(dateString);
-                return date.toLocaleDateString('fr-FR', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-            } catch(e) {
-                return dateString;
-            }
-        }
-
-        // Fonction pour créer un élément avec du texte
-        function createElementWithText(tag, text, className = null) {
-            const element = document.createElement(tag);
-            element.appendChild(document.createTextNode(text || "Non disponible"));
-            if (className) element.className = className;
-            return element;
-        }
-
-        // Fonction pour traiter un flux RSS
-        function processFeed(feedConfig) {
-            const feed = new google.feeds.Feed(feedConfig.url);
-            feed.setNumEntries(10); // Limiter à 10 articles par flux
-            
-            feed.load(function(result) {
-                const container = document.getElementById(feedConfig.id);
-                if (!container) return;
-                
-                // Supprimer les anciens articles (garder le titre)
-                while (container.children.length > 1) {
-                    container.removeChild(container.lastChild);
-                }
-                
-                if (result.error) {
-                    const errorMsg = document.createElement("p");
-                    errorMsg.style.color = "red";
-                    errorMsg.style.padding = "10px";
-                    errorMsg.style.backgroundColor = "#ffebee";
-                    errorMsg.style.borderRadius = "5px";
-                    errorMsg.innerHTML = `❌ Erreur de chargement du flux : ${result.error.message || "Vérifiez l'URL"}`;
-                    container.appendChild(errorMsg);
-                    return;
-                }
-                
-                if (!result.feed.entries || result.feed.entries.length === 0) {
-                    const noDataMsg = document.createElement("p");
-                    noDataMsg.innerHTML = "📭 Aucun article trouvé dans ce flux.";
-                    container.appendChild(noDataMsg);
-                    return;
-                }
-                
-                // Afficher chaque article
-                for (let i = 0; i < result.feed.entries.length; i++) {
-                    const entry = result.feed.entries[i];
-                    const articleDiv = document.createElement("div");
-                    articleDiv.style.marginBottom = "25px";
-                    articleDiv.style.padding = "15px";
-                    articleDiv.style.backgroundColor = "rgba(255,255,255,0.7)";
-                    articleDiv.style.borderRadius = "8px";
-                    
-                    // Catégories
-                    if (feedConfig.showCategories && entry.categories && entry.categories.length > 0) {
-                        const categories = entry.categories.join(", ");
-                        articleDiv.appendChild(createElementWithText("h3", "🏷️ " + categories));
-                    }
-                    
-                    // Titre
-                    const title = entry.title || "Sans titre";
-                    const titleElement = createElementWithText("h2", title);
-                    titleElement.style.color = "#2c3e50";
-                    titleElement.style.marginTop = "5px";
-                    articleDiv.appendChild(titleElement);
-                    
-                    // Auteur
-                    if (feedConfig.showAuthor && entry.author) {
-                        articleDiv.appendChild(createElementWithText("p", "✍️ Auteur : " + entry.author));
-                    }
-                    
-                    // Date de publication
-                    if (entry.publishedDate) {
-                        articleDiv.appendChild(createElementWithText("h5", "📅 Publié le : " + formatDate(entry.publishedDate)));
-                    }
-                    
-                    // Contenu
-                    if (feedConfig.showContent) {
-                        let content = "";
-                        if (feedConfig.useContentSnippet && entry.contentSnippet) {
-                            content = entry.contentSnippet;
-                        } else if (entry.content) {
-                            // Nettoyer le content des balises HTML
-                            content = entry.content.replace(/<[^>]*>/g, ' ');
-                            content = content.substring(0, 300);
-                        } else if (entry.contentSnippet) {
-                            content = entry.contentSnippet;
-                        }
-                        
-                        if (content) {
-                            const contentElement = document.createElement("p");
-                            contentElement.innerHTML = content.substring(0, 300) + (content.length > 300 ? "..." : "");
-                            contentElement.style.lineHeight = "1.6";
-                            articleDiv.appendChild(contentElement);
-                        }
-                    }
-                    
-                    // Lien "Lire la suite"
-                    if (entry.link) {
-                        const linkElement = document.createElement("a");
-                        linkElement.href = entry.link;
-                        linkElement.target = "_blank";
-                        linkElement.innerHTML = "📖 اقرأ المزيد (Lire la suite)";
-                        linkElement.style.display = "inline-block";
-                        linkElement.style.marginTop = "10px";
-                        articleDiv.appendChild(linkElement);
-                    }
-                    
-                    // Séparateur
-                    const hr = document.createElement("hr");
-                    hr.style.marginTop = "15px";
-                    articleDiv.appendChild(hr);
-                    
-                    container.appendChild(articleDiv);
-                }
-                
-                // Afficher le nombre d'articles chargés
-                const infoMsg = document.createElement("p");
-                infoMsg.style.fontSize = "0.85em";
-                infoMsg.style.color = "#666";
-                infoMsg.style.marginTop = "10px";
-                infoMsg.style.textAlign = "center";
-                infoMsg.innerHTML = `✅ ${result.feed.entries.length} article(s) chargé(s) depuis ${result.feed.title || "le flux"}`;
-                container.appendChild(infoMsg);
-            });
-        }
-
-        // Fonction d'initialisation principale
-        function initializeAllFeeds() {
-            for (let i = 0; i < feeds.length; i++) {
-                processFeed(feeds[i]);
-            }
-        }
-
-        // Démarrer le chargement de tous les flux
-        google.setOnLoadCallback(initializeAllFeeds);
-    </script>
-</body></html>
+</body>
+</html>
