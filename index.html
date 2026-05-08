@@ -1,12 +1,13 @@
 <!doctype html>
 <html><head>
 <meta charset="UTF-8">
-<title>Agrégateur RSS - Version PHP</title>
+<title>Agrégateur RSS - Lecture directe</title>
 <style>
 body { font-family: Arial, sans-serif; margin: 20px; background: #f0f0f0; }
 hr { background-color: #B0BEC5; height: 2px; border: none; margin: 15px 0; }
 h2 { color: #2c3e50; margin: 10px 0 5px; font-size: 1.3em; }
 h3 { color: #2980b9; margin: 5px 0; font-size: 1.1em; }
+h4 { color: #e67e22; margin: 5px 0; }
 h5 { color: #7f8c8d; font-size: 0.85em; margin: 5px 0; }
 a {
     display: inline-block;
@@ -45,6 +46,7 @@ p { font-size: 1em; line-height: 1.5; margin: 8px 0; }
     height: auto;
     border-radius: 8px;
     margin: 10px 0;
+    display: block;
 }
 .article .article-images {
     display: flex;
@@ -70,7 +72,7 @@ p { font-size: 1em; line-height: 1.5; margin: 8px 0; }
 </head>
 <body>
 
-<h1 style="text-align: center;">📰 Agrégateur de Flux RSS</h1>
+<h1 style="text-align: center;">📰 Agrégateur de Flux RSS - Lecture directe</h1>
 
 <div id="feed1" class="feed-box"><div class="feed-title">🌐 Arabi21 - 408</div><div class="loader">Chargement...</div></div>
 <div id="feed2" class="feed-box"><div class="feed-title">📺 Al Jazeera Net</div><div class="loader">Chargement...</div></div>
@@ -81,8 +83,24 @@ p { font-size: 1em; line-height: 1.5; margin: 8px 0; }
 <div id="feed7" class="feed-box"><div class="feed-title">☕ CafeZigomar.ml Feed</div><div class="loader">Chargement...</div></div>
 
 <script>
-const MAX_ARTICLES = 30;
+// Nombre d'articles à afficher
+const MAX_ARTICLES_PER_FEED = 30;  // 30 articles
 
+// Proxy CORS gratuit qui fonctionne encore
+const CORS_PROXY = "https://api.allorigins.win/raw?url=";
+
+// Configuration des flux
+const feeds = [
+    { id: "feed1", url: "https://arabi21.com/Rss/SectionNewsRSS?id=408" },
+    { id: "feed2", url: "https://www.aljazeera.net/aljazeerarss/a7c186be-1baa-4bd4-9d80-a84db769f779/73d0e1b4-532f-45ef-b135-bfdff8b8cab9" },
+    { id: "feed3", url: "https://arabi21.com/Rss/SectionNewsRSS?id=316" },
+    { id: "feed4", url: "https://arabi21.com/Rss/SectionNewsRSS?id=320" },
+    { id: "feed5", url: "https://zigomar007.github.io/rss-reader/feed.xml" },
+    { id: "feed6", url: "https://zigomar007.github.io/zigomar.cf/zigomar.xml" },
+    { id: "feed7", url: "https://zigomar007.github.io/cafezigomar.ml/feed.xml" }
+];
+
+// Fonction pour extraire les images
 function extractImages(htmlContent) {
     const images = [];
     const imgRegex = /<img[^>]+src=["']([^"']+)["']/gi;
@@ -93,6 +111,7 @@ function extractImages(htmlContent) {
     return images;
 }
 
+// Nettoyer le contenu
 function cleanContent(htmlContent, maxLength = 500) {
     if (!htmlContent) return { text: "Aucun contenu", images: [] };
     const images = extractImages(htmlContent);
@@ -101,6 +120,7 @@ function cleanContent(htmlContent, maxLength = 500) {
     return { text: text || "Aucun contenu", images: images };
 }
 
+// Parser le XML RSS manuellement
 function parseRSS(xmlText, feedId) {
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlText, "text/xml");
@@ -109,34 +129,42 @@ function parseRSS(xmlText, feedId) {
         throw new Error("Erreur de parsing XML");
     }
     
+    // Récupérer tous les items
     let items = xmlDoc.querySelectorAll("item");
-    if (items.length === 0) items = xmlDoc.querySelectorAll("entry");
+    if (items.length === 0) {
+        items = xmlDoc.querySelectorAll("entry");
+    }
     
     const container = document.getElementById(feedId);
-    while (container.children.length > 1) container.removeChild(container.lastChild);
+    while (container.children.length > 1) {
+        container.removeChild(container.lastChild);
+    }
     
     if (items.length === 0) {
         container.innerHTML += '<div class="error-msg">❌ Aucun article trouvé</div>';
         return;
     }
     
+    // Convertir les items en tableau d'objets
     const articles = [];
     for (let item of items) {
-        articles.push({
-            title: item.querySelector("title")?.textContent || "Sans titre",
-            link: item.querySelector("link")?.textContent || "#",
-            pubDate: item.querySelector("pubDate")?.textContent || "Date inconnue",
-            author: (item.querySelector("author")?.textContent || "Auteur inconnu").replace(/^بقلم\s*:\s*/i, ''),
-            category: item.querySelector("category")?.textContent || "Général",
-            description: item.querySelector("description")?.textContent || ""
-        });
+        const title = item.querySelector("title")?.textContent || "Sans titre";
+        const link = item.querySelector("link")?.textContent || "#";
+        const pubDate = item.querySelector("pubDate")?.textContent || "Date inconnue";
+        const author = item.querySelector("author")?.textContent?.replace(/^بقلم\s*:\s*/i, '') || "Auteur inconnu";
+        const category = item.querySelector("category")?.textContent || "Général";
+        const description = item.querySelector("description")?.textContent || "";
+        
+        articles.push({ title, link, pubDate, author, category, description });
     }
     
-    const articlesToShow = Math.min(articles.length, MAX_ARTICLES);
+    // Afficher les articles (jusqu'à MAX_ARTICLES_PER_FEED)
+    const articlesToShow = Math.min(articles.length, MAX_ARTICLES_PER_FEED);
     
     for (let i = 0; i < articlesToShow; i++) {
         const art = articles[i];
-        const { text, images } = cleanContent(art.description, 400);
+        
+        const { text: contentText, images } = cleanContent(art.description, 400);
         
         let formattedDate = art.pubDate;
         try {
@@ -149,87 +177,92 @@ function parseRSS(xmlText, feedId) {
             }
         } catch(e) {}
         
-        const div = document.createElement("div");
-        div.className = "article";
-        div.innerHTML = `
-            <h3>🏷️ ${escapeHtml(art.category)}</h3>
-            <h2>${escapeHtml(art.title)}</h2>
-            <p>✍️ <strong>Auteur:</strong> ${escapeHtml(art.author)}</p>
-            <h5>📅 ${escapeHtml(formattedDate)}</h5>
-            <p>${escapeHtml(text)}</p>
-            <a href="${escapeHtml(art.link)}" target="_blank">📖 اقرأ المزيد (Lire la suite)</a>
-            <hr>
-        `;
+        const articleDiv = document.createElement("div");
+        articleDiv.className = "article";
+        
+        const catElem = document.createElement("h3");
+        catElem.textContent = "🏷️ " + art.category;
+        articleDiv.appendChild(catElem);
+        
+        const titleElem = document.createElement("h2");
+        titleElem.textContent = art.title;
+        articleDiv.appendChild(titleElem);
+        
+        const authorElem = document.createElement("p");
+        authorElem.innerHTML = "✍️ <strong>Auteur:</strong> " + art.author;
+        articleDiv.appendChild(authorElem);
+        
+        const dateElem = document.createElement("h5");
+        dateElem.textContent = "📅 " + formattedDate;
+        articleDiv.appendChild(dateElem);
         
         if (images.length > 0) {
-            const imgDiv = document.createElement("div");
-            imgDiv.className = "article-images";
-            for (let imgUrl of images.slice(0, 3)) {
+            const imagesDiv = document.createElement("div");
+            imagesDiv.className = "article-images";
+            for (let imgUrl of images.slice(0, 3)) { // max 3 images par article
                 const img = document.createElement("img");
                 img.src = imgUrl;
-                img.style.maxWidth = "200px";
-                img.style.maxHeight = "150px";
-                img.style.objectFit = "cover";
-                img.onerror = () => img.remove();
-                imgDiv.appendChild(img);
+                img.alt = "Image";
+                img.loading = "lazy";
+                img.onerror = () => img.style.display = "none";
+                imagesDiv.appendChild(img);
             }
-            if (imgDiv.children.length > 0) {
-                div.insertBefore(imgDiv, div.querySelector("p:last-of-type"));
-            }
+            articleDiv.appendChild(imagesDiv);
         }
         
-        container.appendChild(div);
+        const contentElem = document.createElement("p");
+        contentElem.textContent = contentText;
+        articleDiv.appendChild(contentElem);
+        
+        const linkElem = document.createElement("a");
+        linkElem.href = art.link;
+        linkElem.target = "_blank";
+        linkElem.textContent = "📖 اقرأ المزيد (Lire la suite)";
+        articleDiv.appendChild(linkElem);
+        
+        articleDiv.appendChild(document.createElement("hr"));
+        container.appendChild(articleDiv);
     }
     
     const counter = document.createElement("p");
     counter.style.textAlign = "center";
     counter.style.fontSize = "0.85em";
     counter.style.color = "#666";
-    counter.innerHTML = `✅ ${articlesToShow} article(s) sur ${articles.length}`;
+    counter.innerHTML = `✅ ${articlesToShow} article(s) sur ${articles.length} total`;
     container.appendChild(counter);
 }
 
-function escapeHtml(str) {
-    return str.replace(/[&<>]/g, function(m) {
-        if (m === '&') return '&amp;';
-        if (m === '<') return '&lt;';
-        if (m === '>') return '&gt;';
-        return m;
-    });
-}
-
-const feeds = [
-    { id: "feed1", url: "https://arabi21.com/Rss/SectionNewsRSS?id=408" },
-    { id: "feed2", url: "https://www.aljazeera.net/aljazeerarss/a7c186be-1baa-4bd4-9d80-a84db769f779/73d0e1b4-532f-45ef-b135-bfdff8b8cab9" },
-    { id: "feed3", url: "https://arabi21.com/Rss/SectionNewsRSS?id=316" },
-    { id: "feed4", url: "https://arabi21.com/Rss/SectionNewsRSS?id=320" },
-    { id: "feed5", url: "https://zigomar007.github.io/rss-reader/feed.xml" },
-    { id: "feed6", url: "https://zigomar007.github.io/zigomar.cf/zigomar.xml" },
-    { id: "feed7", url: "https://zigomar007.github.io/cafezigomar.ml/feed.xml" }
-];
-
+// Charger un flux via proxy CORS
 async function loadFeed(feed) {
-    const proxyUrl = `rss-proxy.php?url=${encodeURIComponent(feed.url)}`;
+    const proxyUrl = CORS_PROXY + encodeURIComponent(feed.url);
     
     try {
         const response = await fetch(proxyUrl);
         const xmlText = await response.text();
         parseRSS(xmlText, feed.id);
     } catch (error) {
+        console.error(`Erreur ${feed.id}:`, error);
         const container = document.getElementById(feed.id);
-        while (container.children.length > 1) container.removeChild(container.lastChild);
-        container.innerHTML += `<div class="error-msg">❌ Erreur: ${error.message}</div>`;
+        while (container.children.length > 1) {
+            container.removeChild(container.lastChild);
+        }
+        container.innerHTML += `<div class="error-msg">
+            ❌ Erreur chargement: ${feed.url}<br>
+            <small>${error.message}</small>
+        </div>`;
     }
 }
 
+// Charger tous les flux
 async function loadAllFeeds() {
     for (const feed of feeds) {
         await loadFeed(feed);
-        await new Promise(r => setTimeout(r, 300));
+        await new Promise(resolve => setTimeout(resolve, 500));
     }
 }
 
 loadAllFeeds();
 </script>
+
 </body>
 </html>
