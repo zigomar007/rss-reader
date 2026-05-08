@@ -1,6 +1,5 @@
 <!doctype html>
-<html>
-<head>
+<html><head>
 	<meta charset="UTF-8">
 	<title>fetch</title>
 <script src="jquery.min.js"></script>
@@ -322,42 +321,40 @@ google.load("feeds", "26");
 google.load("feeds", "27");
 
     function initialize() {
-      var feed = new google.feeds.Feed("https://zigomar007.github.io/cafezigomar.ml/feed.xml");
+      var feed = new google.feeds.Feed("https://zigomar007.github.io/cafezigomar.ml/feed.xmll");
        feed.load(function(result) {
         if (!result.error) {
-          var container = document.getElementById("feed7");
+          var container = document.getElementById("feed6");
           for (var i = 0; i < result.feed.entries.length; i++) {
             var entry = result.feed.entries[i];
-		var li = document.createElement("h3");
+			
+	var li = document.createElement("h3");
             li.appendChild(document.createTextNode(entry.categories));
             container.appendChild(li);
-			 
-  
-		var div = document.createElement("h2");
-            div.appendChild(document.createTextNode(entry.title));
-            container.appendChild(div);
-	
-	var li = document.createElement("h4");
-            li.appendChild(document.createTextNode(entry.author));
+			
+			var li = document.createElement("h2");
+            li.appendChild(document.createTextNode(entry.title));
             container.appendChild(li);
+			
 			var li = document.createElement("h5");
             li.appendChild(document.createTextNode(entry.publishedDate));
             container.appendChild(li);
-           var li = document.createElement("p");
+		var li = document.createElement("h4");
+            li.appendChild(document.createTextNode(entry.author));
+            container.appendChild(li);	
+			var li = document.createElement("p");
             li.innerHTML = '<p' + entry.content  ;
-            container.appendChild(p);	
-	
-	var a = document.createElement("span");
+            container.appendChild(li);
+		
+			
+		var a = document.createElement("span");
             a.innerHTML = '<a href="' + entry.link +'">' + "اكمل القراءة" + "></a><hr/>";
-            container.appendChild(a);	
-	
+            container.appendChild(a);
 		
           }
         }
       });
     }
     google.setOnLoadCallback(initialize);
-</script> 
-
-</body>
-</html>
+</script>
+</body></html>
