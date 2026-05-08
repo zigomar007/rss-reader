@@ -1,7 +1,7 @@
 <!doctype html>
 <html><head>
 <meta charset="UTF-8">
-<title>Agrégateur RSS - GitHub Pages</title>
+<title>Agrégateur RSS - Version PHP</title>
 <style>
 body { font-family: Arial, sans-serif; margin: 20px; background: #f0f0f0; }
 hr { background-color: #B0BEC5; height: 2px; border: none; margin: 15px 0; }
@@ -81,22 +81,19 @@ p { font-size: 1em; line-height: 1.5; margin: 8px 0; }
 <div id="feed7" class="feed-box"><div class="feed-title">☕ CafeZigomar.ml Feed</div><div class="loader">Chargement...</div></div>
 
 <script>
-// Nombre d'articles à afficher (max 20 pour rss2json)
-const MAX_ARTICLES = 20;
+const MAX_ARTICLES = 30;
 
 function extractImages(htmlContent) {
     const images = [];
     const imgRegex = /<img[^>]+src=["']([^"']+)["']/gi;
     let match;
     while ((match = imgRegex.exec(htmlContent)) !== null) {
-        if (match[1] && !match[1].includes('placeholder')) {
-            images.push(match[1]);
-        }
+        images.push(match[1]);
     }
     return images;
 }
 
-function cleanContent(htmlContent, maxLength = 400) {
+function cleanContent(htmlContent, maxLength = 500) {
     if (!htmlContent) return { text: "Aucun contenu", images: [] };
     const images = extractImages(htmlContent);
     let text = htmlContent.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
@@ -104,36 +101,46 @@ function cleanContent(htmlContent, maxLength = 400) {
     return { text: text || "Aucun contenu", images: images };
 }
 
-function displayArticles(containerId, items) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
+function parseRSS(xmlText, feedId) {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlText, "text/xml");
     
-    while (container.children.length > 1) {
-        container.removeChild(container.lastChild);
+    if (xmlDoc.querySelector("parsererror")) {
+        throw new Error("Erreur de parsing XML");
     }
     
-    if (!items || items.length === 0) {
-        container.innerHTML += '<div class="error-msg">❌ Aucun article disponible</div>';
+    let items = xmlDoc.querySelectorAll("item");
+    if (items.length === 0) items = xmlDoc.querySelectorAll("entry");
+    
+    const container = document.getElementById(feedId);
+    while (container.children.length > 1) container.removeChild(container.lastChild);
+    
+    if (items.length === 0) {
+        container.innerHTML += '<div class="error-msg">❌ Aucun article trouvé</div>';
         return;
     }
     
-    const articlesToShow = Math.min(items.length, MAX_ARTICLES);
+    const articles = [];
+    for (let item of items) {
+        articles.push({
+            title: item.querySelector("title")?.textContent || "Sans titre",
+            link: item.querySelector("link")?.textContent || "#",
+            pubDate: item.querySelector("pubDate")?.textContent || "Date inconnue",
+            author: (item.querySelector("author")?.textContent || "Auteur inconnu").replace(/^بقلم\s*:\s*/i, ''),
+            category: item.querySelector("category")?.textContent || "Général",
+            description: item.querySelector("description")?.textContent || ""
+        });
+    }
+    
+    const articlesToShow = Math.min(articles.length, MAX_ARTICLES);
     
     for (let i = 0; i < articlesToShow; i++) {
-        const item = items[i];
+        const art = articles[i];
+        const { text, images } = cleanContent(art.description, 400);
         
-        const title = item.title || "Sans titre";
-        const link = item.link || "#";
-        const pubDate = item.pubDate || "Date non disponible";
-        const author = item.author || item.creator || "Auteur inconnu";
-        const categories = item.categories ? item.categories.join(", ") : (item.category || "Général");
-        const contentHtml = item.description || item.content || "";
-        
-        const { text: contentText, images } = cleanContent(contentHtml);
-        
-        let formattedDate = pubDate;
+        let formattedDate = art.pubDate;
         try {
-            const date = new Date(pubDate);
+            const date = new Date(art.pubDate);
             if (!isNaN(date.getTime())) {
                 formattedDate = date.toLocaleDateString('fr-FR', {
                     year: 'numeric', month: 'long', day: 'numeric',
@@ -142,16 +149,15 @@ function displayArticles(containerId, items) {
             }
         } catch(e) {}
         
-        const articleDiv = document.createElement("div");
-        articleDiv.className = "article";
-        
-        articleDiv.innerHTML = `
-            <h3>🏷️ ${escapeHtml(categories)}</h3>
-            <h2>${escapeHtml(title)}</h2>
-            <p>✍️ <strong>Auteur:</strong> ${escapeHtml(author)}</p>
+        const div = document.createElement("div");
+        div.className = "article";
+        div.innerHTML = `
+            <h3>🏷️ ${escapeHtml(art.category)}</h3>
+            <h2>${escapeHtml(art.title)}</h2>
+            <p>✍️ <strong>Auteur:</strong> ${escapeHtml(art.author)}</p>
             <h5>📅 ${escapeHtml(formattedDate)}</h5>
-            <p>${escapeHtml(contentText)}</p>
-            <a href="${escapeHtml(link)}" target="_blank">📖 اقرأ المزيد (Lire la suite)</a>
+            <p>${escapeHtml(text)}</p>
+            <a href="${escapeHtml(art.link)}" target="_blank">📖 اقرأ المزيد (Lire la suite)</a>
             <hr>
         `;
         
@@ -161,28 +167,29 @@ function displayArticles(containerId, items) {
             for (let imgUrl of images.slice(0, 3)) {
                 const img = document.createElement("img");
                 img.src = imgUrl;
-                img.loading = "lazy";
+                img.style.maxWidth = "200px";
+                img.style.maxHeight = "150px";
+                img.style.objectFit = "cover";
                 img.onerror = () => img.remove();
                 imgDiv.appendChild(img);
             }
             if (imgDiv.children.length > 0) {
-                articleDiv.insertBefore(imgDiv, articleDiv.querySelector("p:last-of-type"));
+                div.insertBefore(imgDiv, div.querySelector("p:last-of-type"));
             }
         }
         
-        container.appendChild(articleDiv);
+        container.appendChild(div);
     }
     
     const counter = document.createElement("p");
     counter.style.textAlign = "center";
     counter.style.fontSize = "0.85em";
     counter.style.color = "#666";
-    counter.innerHTML = `✅ ${articlesToShow} article(s) affiché(s) sur ${items.length} disponibles`;
+    counter.innerHTML = `✅ ${articlesToShow} article(s) sur ${articles.length}`;
     container.appendChild(counter);
 }
 
 function escapeHtml(str) {
-    if (!str) return '';
     return str.replace(/[&<>]/g, function(m) {
         if (m === '&') return '&amp;';
         if (m === '<') return '&lt;';
@@ -191,7 +198,6 @@ function escapeHtml(str) {
     });
 }
 
-// Configuration des flux
 const feeds = [
     { id: "feed1", url: "https://arabi21.com/Rss/SectionNewsRSS?id=408" },
     { id: "feed2", url: "https://www.aljazeera.net/aljazeerarss/a7c186be-1baa-4bd4-9d80-a84db769f779/73d0e1b4-532f-45ef-b135-bfdff8b8cab9" },
@@ -202,39 +208,24 @@ const feeds = [
     { id: "feed7", url: "https://zigomar007.github.io/cafezigomar.ml/feed.xml" }
 ];
 
-// Charger un flux via rss2json.com
 async function loadFeed(feed) {
-    // api.rss2json.com retourne max 20 articles avec le paramètre 'count'
-    const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}&count=20`;
+    const proxyUrl = `rss-proxy.php?url=${encodeURIComponent(feed.url)}`;
     
     try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        
-        if (data.status === "ok" && data.items && data.items.length > 0) {
-            displayArticles(feed.id, data.items);
-        } else {
-            throw new Error("Aucun article retourné");
-        }
+        const response = await fetch(proxyUrl);
+        const xmlText = await response.text();
+        parseRSS(xmlText, feed.id);
     } catch (error) {
-        console.error(`Erreur ${feed.id}:`, error);
         const container = document.getElementById(feed.id);
-        while (container.children.length > 1) {
-            container.removeChild(container.lastChild);
-        }
-        container.innerHTML += `<div class="error-msg">
-            ❌ Flux inaccessible<br>
-            <small>${feed.url}</small><br>
-            <small>Le site bloque probablement les requêtes CORS.</small>
-        </div>`;
+        while (container.children.length > 1) container.removeChild(container.lastChild);
+        container.innerHTML += `<div class="error-msg">❌ Erreur: ${error.message}</div>`;
     }
 }
 
-// Charger tous les flux
 async function loadAllFeeds() {
     for (const feed of feeds) {
         await loadFeed(feed);
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise(r => setTimeout(r, 300));
     }
 }
 
